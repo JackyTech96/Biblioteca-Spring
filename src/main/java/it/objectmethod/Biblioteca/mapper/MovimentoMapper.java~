@@ -1,0 +1,4 @@
+package it.objectmethod.Biblioteca.mapper;
+
+public interface MovimentoMapper {
+}

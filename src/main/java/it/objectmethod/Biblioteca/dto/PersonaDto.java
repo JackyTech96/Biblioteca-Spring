@@ -1,5 +1,6 @@
 package it.objectmethod.Biblioteca.dto;
 
+import it.objectmethod.Biblioteca.validation.RegexValidation;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import java.util.List;
 public class PersonaDto {
 
     @NotBlank(message = "Il nome non può essere vuoto")
+    @RegexValidation(regexp = "^[a-zA-Z]+$", message = "Il nome deve contenere solo lettere", nullable = false)
     private String nome;
 
     @Email(message = "L'email deve essere valida")

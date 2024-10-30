@@ -17,6 +17,7 @@ import java.util.List;
 public class PersonaDto {
 
     @NotBlank(message = "Il nome non può essere vuoto")
+    @Vali
     private String nome;
 
     @Email(message = "L'email deve essere valida")
@@ -24,8 +25,8 @@ public class PersonaDto {
     private String email;
     private String telefono;
 
-    private List<UtenteDto> utenti;
-    private List<PersonaleDto> personale;
-    private List<PersonaIndirizzoDto> indirizzi;
+//    private List<UtenteDto> utenti;
+//    private List<PersonaleDto> personale;
+//    private List<PersonaIndirizzoDto> indirizzi;
 
 }

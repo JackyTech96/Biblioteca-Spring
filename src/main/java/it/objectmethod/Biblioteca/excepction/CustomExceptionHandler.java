@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
+
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
@@ -32,5 +34,20 @@ public class CustomExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorBody> handleConstraintViolationException(ConstraintViolationException ex) {
 
+//        String message = ex.getConstraintViolations().stream()
+//                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+//                .collect(Collectors.joining(", "));
+
+
+        ErrorBody errorBody = ErrorBody.builder()
+                .message(ConstraintViolationException.class.getSimpleName())
+                .description(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
+    }
 }

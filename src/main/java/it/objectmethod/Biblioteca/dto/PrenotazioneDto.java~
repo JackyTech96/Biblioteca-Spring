@@ -1,6 +1,6 @@
 package it.objectmethod.Biblioteca.dto;
 
-import it.objectmethod.Biblioteca.enums.Stato;
+import it.objectmethod.Biblioteca.enums.StatoPrenotazione;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,7 +21,11 @@ public class PrenotazioneDto {
     private Date dataPrenotazione;
 
     @NotNull(message = "Lo stato non può essere nullo")
-    private Stato stato;
-    private LibroDto libro;
-    private UtenteDto utente;
+    private StatoPrenotazione stato;
+
+    @NotNull(message = "Il libro non può essere nullo")
+    private Long libroId;
+
+    @NotNull(message = "L'utente non può essere nulla")
+    private Long utenteId;
 }

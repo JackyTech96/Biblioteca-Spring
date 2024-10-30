@@ -23,6 +23,9 @@ public class PrenotazioneDto {
     @NotNull(message = "Lo stato non può essere nullo")
     private StatoPrenotazione stato;
 
-    private LibroDto libro;
-    private UtenteDto utente;
+    @NotNull(message = "Il libro non può essere nullo")
+    private Long libroId;
+
+    @NotNull(message = "L'utente non può essere nullo")
+    private Long utenteId;
 }

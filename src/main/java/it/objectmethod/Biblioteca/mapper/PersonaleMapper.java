@@ -13,14 +13,14 @@ public interface PersonaleMapper {
     @Mapping(target = "nome", source = "persona.nome")
     @Mapping(target = "email", source = "persona.email")
     @Mapping(target = "telefono", source = "persona.telefono")
-//   @Mapping(target = "ruolo", source = "ruolo.nomeRuolo")
+//    @Mapping(target = "ruolo", source = "ruolo")
     PersonaleDto personaleToPersonaleDto(Personale personale);
 
     @Mapping(target = "persona.personaId", source = "personaId")
     @Mapping(target = "persona.nome", source = "nome")
     @Mapping(target = "persona.email", source = "email")
     @Mapping(target = "persona.telefono", source = "telefono")
-//    @Mapping(target = "ruolo.nomeRuolo", source = "ruolo")
+//    @Mapping(target = "ruolo", source = "ruolo")
     Personale personaleDtoToPersonale(PersonaleDto personaleDto);
 
     List<PersonaleDto> personaleListToPersonaleDtoList(List<Personale> personaleList);

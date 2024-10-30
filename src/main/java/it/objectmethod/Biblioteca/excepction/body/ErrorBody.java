@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Jacksonized
 @Data
 @NoArgsConstructor
-@Builder(toBuilder = true)
+@Builder
 public class ErrorBody {
 
     private String message;

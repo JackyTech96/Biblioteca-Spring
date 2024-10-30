@@ -12,6 +12,8 @@ import java.util.List;
 
 @Repository
 public interface PersonaleRepository extends JpaRepository<Personale, Long>, JpaSpecificationExecutor<Personale> {
-    @Query(value = "SELECT * FROM Personale WHERE p.ruolo.nome_ruolo = :nomeRuolo", nativeQuery = true)
-    List<Personale> findByRuolo_NomeRuolo(@Param("nomeRuolo") NomeRuolo nomeRuolo);
+    //    @Query(value = "SELECT * FROM Personale WHERE p.ruolo.nome_ruolo = :nomeRuolo", nativeQuery = true)
+//    @Query(value = "SELECT * FROM personale p JOIN ruolo r ON p.ruolo_id = r.ruolo_id WHERE r.nome_ruolo = :nomeRuolo", nativeQuery = true)
+    @Query("SELECT p FROM Personale p JOIN p.ruolo r WHERE LOWER(r.nomeRuolo) = LOWER(:nomeRuolo)")
+    List<Personale> findByRuolo_NomeRuolo(@Param("nomeRuolo") String nomeRuolo);
 }

@@ -18,4 +18,8 @@ public class PersonaService {
     public List<PersonaDto> findAll() {
         return personaMapper.personaListToPersonaDtoList(personaRepository.findAll());
     }
+
+    public PersonaDto createPersona(PersonaDto personaDto) {
+        return personaMapper.personaToPersonaDto(personaRepository.save(personaMapper.personaDtoToPersona(personaDto)));
+    }
 }

@@ -10,6 +10,7 @@ import it.objectmethod.Biblioteca.enums.NomeRuolo;
 import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
 import it.objectmethod.Biblioteca.mapper.PersonaMapper;
 import it.objectmethod.Biblioteca.mapper.PersonaleMapper;
+
 import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import it.objectmethod.Biblioteca.repository.PersonaleRepository;
 import it.objectmethod.Biblioteca.repository.RuoloRepository;
@@ -40,7 +41,7 @@ public class PersonaleService {
         return personaleMapper.personaleListToPersonaleDtoList(personaleRepository.findAll());
     }
 
-    public PersonaleDto createPersonaleConPersona(PersonaleDto personaleDto) {
+    public PersonaleDto createPersonaleConPersona(final PersonaleDto personaleDto) {
         // Creazione della persona
         Persona persona = new Persona();
         persona.setNome(personaleDto.getNome());
@@ -71,7 +72,7 @@ public class PersonaleService {
         }
     }
 
-    public List<PersonaleDto> findPersonaleByNomeRuolo(final NomeRuolo nomeRuolo) {
+    public List<PersonaleDto> findPersonaleByNomeRuolo(final String nomeRuolo) {
         try {
             List<Personale> personaleList = personaleRepository.findByRuolo_NomeRuolo(nomeRuolo);
             if (personaleList.isEmpty()) {
@@ -82,4 +83,8 @@ public class PersonaleService {
             throw new ElementNotFoundException("Errore nella ricerca del personale con il ruolo " + nomeRuolo);
         }
     }
+
+//    public List<PersonaleDto> findPersonaleByNomeRuolo(final PersonaleParams params) {
+//        return personaleMapper.personaleListToPersonaleDtoList(personaleRepository.findAll(params.toSpecification()));
+//    }
 }

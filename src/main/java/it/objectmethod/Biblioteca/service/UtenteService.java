@@ -42,7 +42,7 @@ public class UtenteService {
      * @param utenteDto il dto dell'utente da creare
      * @return il dto dell'utente creato
      */
-    public UtenteDto creaUtenteConPersona(UtenteDto utenteDto) {
+    public UtenteDto creaUtenteConPersona(final UtenteDto utenteDto) {
 
 //        PersonaDto personaDto = utenteDto.getPersona();
         Persona persona = new Persona();

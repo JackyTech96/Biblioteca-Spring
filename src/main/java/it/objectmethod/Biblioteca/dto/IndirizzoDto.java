@@ -1,5 +1,6 @@
 package it.objectmethod.Biblioteca.dto;
 
+import it.objectmethod.Biblioteca.enums.TipoIndirizzo;
 import it.objectmethod.Biblioteca.enums.TipoVia;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
@@ -30,7 +31,7 @@ public class IndirizzoDto {
     @NotBlank(message = "Il cap non è vuoto")
     private String cap;
     @NotBlank(message = "Il tipo indirizzo non è vuoto")
-    private String tipoIndirizzo;
+    private TipoIndirizzo tipoIndirizzo;
 
-    private List<PersonaIndirizzoDto> personaIndirizzi;
+//    private List<PersonaIndirizzoDto> personaIndirizzi;
 }
