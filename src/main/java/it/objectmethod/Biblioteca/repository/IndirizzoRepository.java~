@@ -1,0 +1,8 @@
+package it.objectmethod.Biblioteca.repository;
+
+import it.objectmethod.Biblioteca.entity.Indirizzo;
+import org.hibernate.type.descriptor.converter.spi.JpaAttributeConverter;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+public interface IndirizzoRepository extends JpaAttributeConverter<Indirizzo, Long>, JpaSpecificationExecutor<Indirizzo> {
+}

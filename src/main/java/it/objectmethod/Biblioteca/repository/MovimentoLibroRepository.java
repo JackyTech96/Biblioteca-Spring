@@ -1,0 +1,10 @@
+package it.objectmethod.Biblioteca.repository;
+
+import it.objectmethod.Biblioteca.entity.MovimentoLibro;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface MovimentoLibroRepository extends JpaRepository<MovimentoLibro, Long>, JpaSpecificationExecutor<MovimentoLibro> {
+}

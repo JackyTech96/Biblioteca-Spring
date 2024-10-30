@@ -1,0 +1,4 @@
+package it.objectmethod.Biblioteca.repository;
+
+public interface LibroRepository {
+}

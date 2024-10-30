@@ -1,0 +1,27 @@
+package it.objectmethod.Biblioteca.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.Year;
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class LibroDto {
+
+    private String titolo;
+    private String autore;
+    private String isbn;
+    private String genere;
+    private String editore;
+    private Year annoPubblicazione;
+    private Integer copie;
+
+    private List<PrenotazioneDto> prenotazioni;
+    private List<MovimentoLibroDto> movimentoLibri;
+}

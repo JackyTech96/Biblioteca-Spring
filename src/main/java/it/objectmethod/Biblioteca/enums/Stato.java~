@@ -1,0 +1,4 @@
+package it.objectmethod.Biblioteca.enums;
+
+public enum Stato {
+}
