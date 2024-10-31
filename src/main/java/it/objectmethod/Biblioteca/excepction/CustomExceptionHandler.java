@@ -1,13 +1,17 @@
 package it.objectmethod.Biblioteca.excepction;
 
 import it.objectmethod.Biblioteca.excepction.body.ErrorBody;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolationException;
+//import javax.validation.ConstraintViolation;
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @RestControllerAdvice
@@ -34,19 +38,22 @@ public class CustomExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorBody> handleConstraintViolationException(ConstraintViolationException ex) {
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorBody> handleConstraintViolationException(MethodArgumentNotValidException ex) {
 //        String message = ex.getConstraintViolations().stream()
 //                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
 //                .collect(Collectors.joining(", "));
+        String errorMessage = "Errore di validazione dati";
 
-
+        Map<String, String> fieldErrors = ex.getBindingResult().getFieldErrors().stream()
+                .collect(Collectors.toMap(error -> error.getField(), error -> error.getDefaultMessage()));
         ErrorBody errorBody = ErrorBody.builder()
                 .message(ConstraintViolationException.class.getSimpleName())
-                .description(ex.getMessage())
+                .description(errorMessage)
                 .timestamp(LocalDateTime.now())
                 .httpStatus(HttpStatus.BAD_REQUEST)
+                .errors(fieldErrors)
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
     }

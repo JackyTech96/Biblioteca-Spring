@@ -1,5 +1,6 @@
 package it.objectmethod.Biblioteca.dto;
 
+import it.objectmethod.Biblioteca.validation.IsbnAnnoValidation;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@IsbnAnnoValidation
 public class LibroDto {
 
     @NotBlank(message = "Il titolo non può essere vuoto")

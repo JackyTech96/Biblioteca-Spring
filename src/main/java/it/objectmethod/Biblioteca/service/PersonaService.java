@@ -19,7 +19,7 @@ public class PersonaService {
         return personaMapper.personaListToPersonaDtoList(personaRepository.findAll());
     }
 
-    public PersonaDto createPersona(PersonaDto personaDto) {
+    public PersonaDto createPersona(final PersonaDto personaDto) {
         return personaMapper.personaToPersonaDto(personaRepository.save(personaMapper.personaDtoToPersona(personaDto)));
     }
 }

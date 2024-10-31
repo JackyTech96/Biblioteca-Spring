@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 public class PersonaDto {
 
-    @NotBlank(message = "Il nome non può essere vuoto")
+    //    @NotBlank(message = "Il nome non può essere vuoto")
     @RegexValidation(regexp = "^[a-zA-Z]+$", message = "Il nome deve contenere solo lettere", nullable = false)
     private String nome;
 

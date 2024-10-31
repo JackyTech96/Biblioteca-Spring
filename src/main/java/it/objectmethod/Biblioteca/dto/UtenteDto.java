@@ -1,5 +1,6 @@
 package it.objectmethod.Biblioteca.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -26,8 +27,9 @@ public class UtenteDto {
 
     private Long personaId;
     private String nome;
+    @Email(message = "L'email deve essere valida")
     private String email;
     private String telefono;
-    private List<PrenotazioneDto> prenotazioni;
-    private List<MovimentoLibroDto> movimentiLibro;
+//    private List<PrenotazioneDto> prenotazioni;
+//    private List<MovimentoLibroDto> movimentiLibro;
 }

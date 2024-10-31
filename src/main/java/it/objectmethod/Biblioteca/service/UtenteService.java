@@ -7,6 +7,7 @@ import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
 import it.objectmethod.Biblioteca.excepction.OperationNotAllowedException;
 import it.objectmethod.Biblioteca.mapper.PersonaMapper;
 import it.objectmethod.Biblioteca.mapper.UtenteMapper;
+import it.objectmethod.Biblioteca.param.UtenteParams;
 import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import it.objectmethod.Biblioteca.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +77,13 @@ public class UtenteService {
         } catch (Exception e) {
             throw new ElementNotFoundException("Utente non trovato");
         }
+    }
+
+    public List<UtenteDto> findWithSpecification(final UtenteParams utenteParams) {
+        List<Utente> utenti = utenteRepository.findAll(utenteParams.toSpecification());
+        if (utenti.isEmpty()) {
+            throw new ElementNotFoundException("Nessun utente trovato con i criteri specificati.");
+        }
+        return utenteMapper.utenteListToUtenteDtoList(utenti);
     }
 }

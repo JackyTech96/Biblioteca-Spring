@@ -73,15 +73,11 @@ public class PersonaleService {
     }
 
     public List<PersonaleDto> findPersonaleByNomeRuolo(final String nomeRuolo) {
-        try {
-            List<Personale> personaleList = personaleRepository.findByRuolo_NomeRuolo(nomeRuolo);
-            if (personaleList.isEmpty()) {
-                throw new ElementNotFoundException("Nessun personale trovato con il ruolo " + nomeRuolo);
-            }
-            return personaleMapper.personaleListToPersonaleDtoList(personaleList);
-        } catch (Exception e) {
-            throw new ElementNotFoundException("Errore nella ricerca del personale con il ruolo " + nomeRuolo);
+        List<Personale> personaleList = personaleRepository.findByRuolo_NomeRuolo(nomeRuolo);
+        if (personaleList.isEmpty()) {
+            throw new ElementNotFoundException("Nessun personale trovato con il ruolo " + nomeRuolo);
         }
+        return personaleMapper.personaleListToPersonaleDtoList(personaleList);
     }
 
 //    public List<PersonaleDto> findPersonaleByNomeRuolo(final PersonaleParams params) {

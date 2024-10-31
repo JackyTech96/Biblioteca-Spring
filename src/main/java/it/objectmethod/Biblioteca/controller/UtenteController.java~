@@ -24,12 +24,12 @@ public class UtenteController {
     }
 
     @PostMapping("")
-    public UtenteDto creaUtenteConPersona(@RequestBody UtenteDto utenteDto) {
+    public UtenteDto creaUtenteConPersona(@RequestBody final UtenteDto utenteDto) {
         return utenteService.creaUtenteConPersona(utenteDto);
     }
 
     @GetMapping("/{id}")
-    public UtenteDto findUtenteById(@PathVariable Long id) {
+    public UtenteDto findUtenteById(@PathVariable final Long id) {
         return utenteService.findById(id);
     }
 }

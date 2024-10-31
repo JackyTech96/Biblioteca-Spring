@@ -15,15 +15,20 @@ import lombok.NoArgsConstructor;
 public class PersonaIndirizzoDto {
     @NotNull(message = "La persona non può essere nulla")
     private Long personaId;
+
     @NotNull(message = "L'indirizzo non può essere nullo")
     private Long indirizzoId;
+
     @NotBlank(message = "Il nome non può essere vuoto")
     private String nome;
+
     @NotBlank(message = "L'email non può essere vuota")
     @Email(message = "L'email deve essere valida")
     private String email;
+
     @NotBlank(message = "La nazione non può essere vuota")
     private String nazione;
+
     @NotBlank(message = "La citta non può essere vuota")
     private String citta;
 }

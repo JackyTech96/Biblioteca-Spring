@@ -39,6 +39,6 @@ public class LibroDto {
     @Positive(message = "Il numero di copie deve essere un numero positivo")
     private Integer copie;
 
-    private List<PrenotazioneDto> prenotazioni;
-    private List<MovimentoLibroDto> movimentoLibri;
+//    private List<PrenotazioneDto> prenotazioni;
+//    private List<MovimentoLibroDto> movimentoLibri;
 }

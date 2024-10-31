@@ -2,8 +2,10 @@ package it.objectmethod.Biblioteca.controller;
 
 import it.objectmethod.Biblioteca.dto.UtenteDto;
 
+import it.objectmethod.Biblioteca.param.UtenteParams;
 import it.objectmethod.Biblioteca.service.UtenteService;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -31,5 +33,10 @@ public class UtenteController {
     @GetMapping("/{id}")
     public UtenteDto findUtenteById(@PathVariable final Long id) {
         return utenteService.findById(id);
+    }
+
+    @GetMapping("/spec")
+    public List<UtenteDto> getUtenteBySpec(@Valid final UtenteParams params) {
+        return utenteService.findWithSpecification(params);
     }
 }

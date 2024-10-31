@@ -7,6 +7,7 @@ import lombok.extern.jackson.Jacksonized;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Jacksonized
 @Data
@@ -18,6 +19,7 @@ public class ErrorBody {
     private String description;
     private LocalDateTime timestamp;
     private HttpStatus httpStatus;
+    private Map<String, String> errors;
 
     public ErrorBody(String message, String description, LocalDateTime timestamp, HttpStatus httpStatus) {
         this.message = message;
@@ -25,4 +27,13 @@ public class ErrorBody {
         this.timestamp = timestamp;
         this.httpStatus = httpStatus;
     }
+
+    public ErrorBody(String message, String description, LocalDateTime timestamp, HttpStatus httpStatus, Map<String, String> errors) {
+        this.message = message;
+        this.description = description;
+        this.timestamp = timestamp;
+        this.httpStatus = httpStatus;
+        this.errors = errors;
+    }
+
 }
