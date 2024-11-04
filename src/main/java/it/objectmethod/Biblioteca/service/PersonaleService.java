@@ -1,16 +1,13 @@
 package it.objectmethod.Biblioteca.service;
 
-import it.objectmethod.Biblioteca.dto.PersonaDto;
 import it.objectmethod.Biblioteca.dto.PersonaleDto;
-import it.objectmethod.Biblioteca.dto.RuoloDto;
 import it.objectmethod.Biblioteca.entity.Persona;
 import it.objectmethod.Biblioteca.entity.Personale;
 import it.objectmethod.Biblioteca.entity.Ruolo;
-import it.objectmethod.Biblioteca.enums.NomeRuolo;
 import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
+import it.objectmethod.Biblioteca.excepction.OperationNotAllowedException;
 import it.objectmethod.Biblioteca.mapper.PersonaMapper;
 import it.objectmethod.Biblioteca.mapper.PersonaleMapper;
-
 import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import it.objectmethod.Biblioteca.repository.PersonaleRepository;
 import it.objectmethod.Biblioteca.repository.RuoloRepository;
@@ -29,7 +26,7 @@ public class PersonaleService {
     private PersonaleMapper personaleMapper;
 
     @Autowired
-    private PersonaRepository personaRepository;
+    private PersonaService personaRepository;
 
     @Autowired
     private PersonaMapper personaMapper;
@@ -47,7 +44,12 @@ public class PersonaleService {
         persona.setNome(personaleDto.getNome());
         persona.setEmail(personaleDto.getEmail());
         persona.setTelefono(personaleDto.getTelefono());
-        persona = personaRepository.save(persona);
+        try {
+            persona = personaRepository.createPersona(persona);
+        } catch (ElementNotFoundException e) {
+            throw new OperationNotAllowedException("Operazione di creazione non riuscita");
+        }
+
 
         // Creazione e salvataggio del ruolo
         Ruolo ruolo = new Ruolo();
@@ -67,7 +69,7 @@ public class PersonaleService {
     public PersonaleDto findPersonaleById(final Long id) {
         try {
             return personaleMapper.personaleToPersonaleDto(personaleRepository.findById(id).get());
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             throw new ElementNotFoundException("Personale non trovato");
         }
     }
@@ -83,4 +85,6 @@ public class PersonaleService {
 //    public List<PersonaleDto> findPersonaleByNomeRuolo(final PersonaleParams params) {
 //        return personaleMapper.personaleListToPersonaleDtoList(personaleRepository.findAll(params.toSpecification()));
 //    }
+
+
 }

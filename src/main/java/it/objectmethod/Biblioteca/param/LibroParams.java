@@ -37,58 +37,52 @@ public class LibroParams {
                 .and(equalAnnoPubblicazioneSpecification(annoPubblicazione));
     }
 
-    public Specification<Libro> equalIdSpecification(final Long libroId) {
+    private Specification<Libro> equalIdSpecification(final Long libroId) {
         if (libroId == null) {
             return null;
         }
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Libro_.LIBRO_ID), libroId);
     }
 
-    public Specification<Libro> equalTitoloSpecification(final String titolo) {
+    private Specification<Libro> equalTitoloSpecification(final String titolo) {
         if (titolo == null) {
             return null;
         }
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Libro_.TITOLO), titolo);
-
     }
 
-    public Specification<Libro> equalAutoreSpecification(final String autore) {
+    private Specification<Libro> equalAutoreSpecification(final String autore) {
         if (autore == null) {
             return null;
         }
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Libro_.AUTORE), autore);
-
     }
 
-    public Specification<Libro> equalIsbnSpecification(final String isbn) {
+    private Specification<Libro> equalIsbnSpecification(final String isbn) {
         if (isbn == null) {
             return null;
         }
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Libro_.ISBN), isbn);
-
     }
 
-    public Specification<Libro> equalGenereSpecification(final String genere) {
+    private Specification<Libro> equalGenereSpecification(final String genere) {
         if (genere == null) {
             return null;
         }
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Libro_.GENERE), genere);
-
     }
 
-    public Specification<Libro> equalEditoreSpecification(final String editore) {
+    private Specification<Libro> equalEditoreSpecification(final String editore) {
         if (editore == null) {
             return null;
         }
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Libro_.EDITORE), editore);
-
     }
 
-    public Specification<Libro> equalAnnoPubblicazioneSpecification(final Year annoPubblicazione) {
+    private Specification<Libro> equalAnnoPubblicazioneSpecification(final Year annoPubblicazione) {
         if (annoPubblicazione == null) {
             return null;
         }
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Libro_.ANNO_PUBBLICAZIONE), annoPubblicazione);
-
     }
 }

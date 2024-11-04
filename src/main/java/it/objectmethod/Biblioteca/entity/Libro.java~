@@ -47,4 +47,7 @@ public class Libro {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "libro")
     private List<Prenotazione> prenotazioni;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "libro")
+    private List<MovimentoLibro> movimentiLibro;
+
 }

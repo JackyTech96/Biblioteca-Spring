@@ -18,6 +18,6 @@ public interface LibroMapper {
 
     List<Libro> libriDtoToLibri(List<LibroDto> libriDto);
 
-    @Mapping(target = "libroId", ignore = true)
+    //    @Mapping(target = "libroId", ignore = true)
     public void updateLibro(@MappingTarget Libro libro, LibroDto libroDto);
 }

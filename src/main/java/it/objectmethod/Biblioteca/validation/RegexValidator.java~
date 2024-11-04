@@ -12,7 +12,7 @@ public class RegexValidator implements ConstraintValidator<RegexValidation, Stri
     private boolean nullable;
 
     @Override
-    public void initialize(RegexValidation constraintAnnotation) {
+    public void initialize(RegexValidation constraintAnnotation
         this.regexp = constraintAnnotation.regexp();
         this.message = constraintAnnotation.message();
         this.nullable = constraintAnnotation.nullable();
@@ -25,7 +25,7 @@ public class RegexValidator implements ConstraintValidator<RegexValidation, Stri
         }
         boolean valid = value != null && value.matches(regexp);
         if (!valid) {
-            context.disableDefaultConstraintViolation(); // Disabilita il messaggio di errore predefinito.
+//            context.disableDefaultConstraintViolation(); // Disabilita il messaggio di errore predefinito.
             context.buildConstraintViolationWithTemplate(message) // Imposta il messaggio di errore personalizzato.
                     .addConstraintViolation(); // Aggiungi il messaggio al contesto.
         }

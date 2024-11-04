@@ -25,6 +25,11 @@ public class LibroController {
         return libroService.createLibro(libroDto);
     }
 
+    @PutMapping("/{id}")
+    public LibroDto updateLibro(@Valid @RequestBody final LibroDto libroDto, @PathVariable final Long id) {
+        return libroService.updateLibro(libroDto, id);
+    }
+
     @GetMapping("/spec")
     public List<LibroDto> getLibroBySpec(@Valid final LibroParams params) {
         return libroService.findWithSpecification(params);

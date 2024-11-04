@@ -44,10 +44,10 @@ public class Libro {
     @Column(name = "copie")
     private Integer copie;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "libro")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "libro")
     private List<Prenotazione> prenotazioni;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "libro")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "libro")
     private List<MovimentoLibro> movimentiLibro;
 
 }
