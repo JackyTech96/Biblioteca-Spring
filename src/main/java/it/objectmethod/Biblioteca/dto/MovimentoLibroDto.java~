@@ -1,13 +1,12 @@
 package it.objectmethod.Biblioteca.dto;
 
-import it.objectmethod.Biblioteca.enums.StatoPrenotazione;
+import it.objectmethod.Biblioteca.enums.StatoMovimento;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 import java.util.Date;
 
@@ -15,14 +14,17 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PrenotazioneDto {
+public class MovimentoLibroDto {
+    @NotNull(message = "La data di prestito non può essere nulla")
+    private Date dataPrestito;
 
-    @NotNull(message = "La data di prenotazione non può essere nulla")
-    @Past(message = "La data di prenotazione deve essere nel passato")
-    private Date dataPrenotazione;
+    @NotNull(message = "La data di scadenza restituzione non può essere nulla")
+    private Date dataScadenzaRestituzione;
+
+    private Date dataRestituzione;
 
     @NotNull(message = "Lo stato non può essere nullo")
-    private StatoPrenotazione stato;
+    private StatoMovimento stato;
 
     @NotNull(message = "Il libro non può essere nullo")
     private Long libroId;

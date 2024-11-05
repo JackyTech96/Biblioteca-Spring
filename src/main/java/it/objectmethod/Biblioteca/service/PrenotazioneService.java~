@@ -34,23 +34,47 @@ public class PrenotazioneService {
     }
 
     public PrenotazioneDto createPrenotazione(final PrenotazioneDto prenotazioneDto) {
+        // Imposta la data di prenotazione alla data attuale
         prenotazioneDto.setDataPrenotazione(new Date());
+
+        // Imposta lo stato di prenotazione a prenotato
         prenotazioneDto.setStato(StatoPrenotazione.ATTIVA);
+
+        // Controlla se il libro esiste
+        Optional<Libro> libroOpt = libroRepository.findById(prenotazioneDto.getLibroId());
+        Libro libro = libroOpt.orElseThrow(() -> new ElementNotFoundException("Libro non trovato"));
+
+        // Controlla se l'utente esiste
+        Optional<Utente> utenteOpt = utenteRepository.findById(prenotazioneDto.getUtenteId());
+        Utente utente = utenteOpt.orElseThrow(() -> new ElementNotFoundException("Utente non trovato"));
+
+        // Mappa il DTO alla entità Prenotazione
         Prenotazione prenotazione = prenotazioneMapper.prenotazioneDtoToPrenotazione(prenotazioneDto);
+
+        // Imposta gli ID di libro e utente
+        prenotazione.setLibro(libro);
+        prenotazione.setUtente(utente);
+
+        // Salva la prenotazione nel repository
         return prenotazioneMapper.prenotazioneToPrenotazioneDto(prenotazioneRepository.save(prenotazione));
     }
 
+
     public PrenotazioneDto updatePrenotazione(final Long id, final PrenotazioneDto prenotazioneDto) {
+        // Controlla se la prenotazione esiste
         if (!prenotazioneRepository.existsById(id)) {
             throw new ElementNotFoundException("Prenotazione non trovata");
         }
 
+        // Crea una nuova prenotazione esistente per l'aggiornamento
         Prenotazione prenotazioneExist = prenotazioneRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException("Prenotazione non trovata"));
 
+        // Aggiorna i campi della prenotazione esistente
         prenotazioneExist.setDataPrenotazione(prenotazioneDto.getDataPrenotazione());
         prenotazioneExist.setStato(prenotazioneDto.getStato());
 
+        // Aggiornamento del libro se l'ID è fornito
         if (prenotazioneDto.getLibroId() != null) {
             Optional<Libro> libro = libroRepository.findById(prenotazioneDto.getLibroId());
             if (libro.isPresent()) {
@@ -60,6 +84,7 @@ public class PrenotazioneService {
             }
         }
 
+        // Aggiornamento dell'utente se l'ID è fornito
         if (prenotazioneDto.getUtenteId() != null) {
             Optional<Utente> utente = utenteRepository.findById(prenotazioneDto.getUtenteId());
             if (utente.isPresent()) {
@@ -69,6 +94,7 @@ public class PrenotazioneService {
             }
         }
 
+        // Salva e restituisci la prenotazione aggiornata
         return prenotazioneMapper.prenotazioneToPrenotazioneDto(prenotazioneRepository.save(prenotazioneExist));
     }
 

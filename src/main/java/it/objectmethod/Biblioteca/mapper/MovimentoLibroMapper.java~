@@ -14,6 +14,8 @@ public interface MovimentoLibroMapper {
     @Mapping(target = "utenteId", source = "utente.utenteId")
     MovimentoLibroDto movimentoLibroToMovimentoLibroDto(MovimentoLibro movimentoLibro);
 
+    @Mapping(target = "libro.libroId", source = "libroId")
+    @Mapping(target = "utente.utenteId", source = "utenteId")
     MovimentoLibro movimentoLibroDtoToMovimentoLibro(MovimentoLibroDto movimentoLibroDto);
 
     List<MovimentoLibroDto> movimentoLibroListToMovimentoLibroDtoList(List<MovimentoLibro> movimentoLibroList);

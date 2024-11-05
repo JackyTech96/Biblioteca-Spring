@@ -1,5 +1,6 @@
 package it.objectmethod.Biblioteca.entity;
 
+import it.objectmethod.Biblioteca.enums.StatoMovimento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,15 +30,16 @@ public class MovimentoLibro {
     @Column(name = "data_restituzione")
     private Date dataRestituzione;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "stato")
-    private String stato;
+    private StatoMovimento stato;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "libro_id")
+    @JoinColumn(name = "libro_id", nullable = false)
     private Libro libro;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(name = "utente_id", nullable = false)
     private Utente utente;
 
 }

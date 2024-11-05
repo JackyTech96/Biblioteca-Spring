@@ -6,7 +6,6 @@ import it.objectmethod.Biblioteca.entity.Prenotazione;
 import it.objectmethod.Biblioteca.entity.Utente;
 import it.objectmethod.Biblioteca.enums.StatoPrenotazione;
 import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
-import it.objectmethod.Biblioteca.mapper.LibroMapper;
 import it.objectmethod.Biblioteca.mapper.PrenotazioneMapper;
 import it.objectmethod.Biblioteca.repository.LibroRepository;
 import it.objectmethod.Biblioteca.repository.PrenotazioneRepository;
@@ -34,11 +33,31 @@ public class PrenotazioneService {
     }
 
     public PrenotazioneDto createPrenotazione(final PrenotazioneDto prenotazioneDto) {
+        // Imposta la data di prenotazione alla data attuale
         prenotazioneDto.setDataPrenotazione(new Date());
+
+        // Imposta lo stato di prenotazione a prenotato
         prenotazioneDto.setStato(StatoPrenotazione.ATTIVA);
+
+        // Controlla se il libro esiste
+        Optional<Libro> libroOpt = libroRepository.findById(prenotazioneDto.getLibroId());
+        Libro libro = libroOpt.orElseThrow(() -> new ElementNotFoundException("Libro non trovato"));
+
+        // Controlla se l'utente esiste
+        Optional<Utente> utenteOpt = utenteRepository.findById(prenotazioneDto.getUtenteId());
+        Utente utente = utenteOpt.orElseThrow(() -> new ElementNotFoundException("Utente non trovato"));
+
+        // Mappa il DTO alla entità Prenotazione
         Prenotazione prenotazione = prenotazioneMapper.prenotazioneDtoToPrenotazione(prenotazioneDto);
+
+        // Imposta gli ID di libro e utente
+        prenotazione.setLibro(libro);
+        prenotazione.setUtente(utente);
+
+        // Salva la prenotazione nel repository
         return prenotazioneMapper.prenotazioneToPrenotazioneDto(prenotazioneRepository.save(prenotazione));
     }
+
 
     public PrenotazioneDto updatePrenotazione(final Long id, final PrenotazioneDto prenotazioneDto) {
         // Controlla se la prenotazione esiste

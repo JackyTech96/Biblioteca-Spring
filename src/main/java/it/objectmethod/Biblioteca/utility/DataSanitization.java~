@@ -10,7 +10,7 @@ public class DataSanitization {
     @Autowired
     private LibroService libroService;
 
-    //    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "0 */1 * * * *")
     public void sanitizeDatabase() {
         libroService.sanitizeLibriByIsbn();
     }

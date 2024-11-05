@@ -1,5 +1,6 @@
 package it.objectmethod.Biblioteca.dto;
 
+import it.objectmethod.Biblioteca.enums.StatoMovimento;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -17,13 +18,12 @@ public class MovimentoLibroDto {
     @NotNull(message = "La data di prestito non può essere nulla")
     private Date dataPrestito;
 
-    @NotNull(message = "La data di scadenza restituzione non può essere nulla")
     private Date dataScadenzaRestituzione;
 
     private Date dataRestituzione;
 
-    @NotBlank(message = "Lo stato non può essere vuoto")
-    private String stato;
+    @NotNull(message = "Lo stato non può essere nullo")
+    private StatoMovimento stato;
 
     @NotNull(message = "Il libro non può essere nullo")
     private Long libroId;

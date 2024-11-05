@@ -1,5 +1,6 @@
 package it.objectmethod.Biblioteca.entity;
 
+import it.objectmethod.Biblioteca.enums.StatoMovimento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +18,7 @@ import java.util.Date;
 public class MovimentoLibro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "movimento_libro_id")
+    @Column(name = "movimento_id")
     private Long movimentoLibroId;
 
     @Column(name = "data_prestito")
@@ -30,14 +31,14 @@ public class MovimentoLibro {
     private Date dataRestituzione;
 
     @Column(name = "stato")
-    private String stato;
+    private StatoMovimento stato;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "libro_id")
+    @JoinColumn(name = "libro_id", nullable = false)
     private Libro libro;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "utente_id")
+    @JoinColumn(name = "utente_id", nullable = false)
     private Utente utente;
 
 }

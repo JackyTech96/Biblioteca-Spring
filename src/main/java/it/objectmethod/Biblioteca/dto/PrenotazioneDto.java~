@@ -26,6 +26,6 @@ public class PrenotazioneDto {
     @NotNull(message = "Il libro non può essere nullo")
     private Long libroId;
 
-    @NotNull(message = "L'utente non può essere nulla")
+    @NotNull(message = "L'utente non può essere nullo")
     private Long utenteId;
 }

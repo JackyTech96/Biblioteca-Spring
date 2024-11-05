@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {LibroMapper.class, UtenteMapper.class})
 public interface MovimentoLibroMapper {
 
     @Mapping(target = "libroId", source = "libro.libroId")

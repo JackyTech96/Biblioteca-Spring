@@ -44,6 +44,6 @@ public class LibroDto {
     @Min(value = 1, message = "Il numero di copie non è valido")
     private Integer copie;
 
-//    private List<PrenotazioneDto> prenotazioni;
-//    private List<MovimentoLibroDto> movimentoLibri;
+    private List<PrenotazioneDto> prenotazioni;
+    private List<MovimentoLibroDto> movimentoLibri;
 }

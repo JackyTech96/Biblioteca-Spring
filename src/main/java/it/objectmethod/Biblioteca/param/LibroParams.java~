@@ -12,7 +12,6 @@ import java.time.Year;
 @Data
 @NoArgsConstructor
 public class LibroParams {
-
     private Long libroId;
     @Nullable
     private String titolo;

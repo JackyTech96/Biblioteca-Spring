@@ -1,6 +1,7 @@
 package it.objectmethod.Biblioteca.service;
 
 import it.objectmethod.Biblioteca.dto.LibroDto;
+import it.objectmethod.Biblioteca.dto.LibroExportDto;
 import it.objectmethod.Biblioteca.dto.PersonaDto;
 import it.objectmethod.Biblioteca.entity.Persona;
 import it.objectmethod.Biblioteca.mapper.LibroMapper;
@@ -35,7 +36,7 @@ public class ExcelExportService {
     @Autowired
     private LibroMapper libroMapper;
 
-//    @Scheduled(cron = "0 */1 * * * *")
+    //    @Scheduled(cron = "0 */1 * * * *")
     public void exportPersonasToExcel() throws IOException {
         List<PersonaDto> personas = personaMapper.personaListToPersonaDtoList(personaRepository.findAll());
         Map<String, List<PersonaDto>> mapData = new HashMap<>();
@@ -46,8 +47,8 @@ public class ExcelExportService {
 
     //    @Scheduled(cron = "0 */1 * * * *")
     public void exportLibrosToExcel() throws IOException {
-        List<LibroDto> libros = libroMapper.libriToLibroDto(libroRepository.findAll());
-        Map<String, List<LibroDto>> mapData = new HashMap<>();
+        List<LibroExportDto> libros = libroMapper.libriToLibroExportDtoList(libroRepository.findAll());
+        Map<String, List<LibroExportDto>> mapData = new HashMap<>();
         mapData.put("Libri", libros);
 
         fileExportUtility.createFileWithSheets("ExportDataLibro", mapData);
