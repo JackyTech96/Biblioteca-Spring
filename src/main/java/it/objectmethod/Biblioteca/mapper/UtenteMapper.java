@@ -5,6 +5,7 @@ import it.objectmethod.Biblioteca.entity.Utente;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -12,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface UtenteMapper {
+public interface UtenteMapper extends PagedMapper<UtenteDto, Utente> {
 
     @Mapping(target = "personaId", source = "persona.personaId")
     @Mapping(target = "nome", source = "persona.nome")
@@ -26,13 +27,26 @@ public interface UtenteMapper {
 //    @Mapping(target = "telefono", source = "persona.telefono")
     Utente utenteDtoToUtente(UtenteDto utenteDto);
 
-//    @Mapping(target = "inizioIscrizione", source = "inizioIscrizione", qualifiedByName = "inizioIscrizione")
+    //    @Mapping(target = "inizioIscrizione", source = "inizioIscrizione", qualifiedByName = "inizioIscrizione")
 //    @Mapping(target = "fineIscrizione", source = "fineIscrizione", qualifiedByName = "fineIscrizione")
 //    Utente toCreateUtente(UtenteDto utenteDto);
-
+    @Mapping(target = "personaId", source = "persona.personaId")
+    @Mapping(target = "nome", source = "persona.nome")
+    @Mapping(target = "email", source = "persona.email")
+    @Mapping(target = "telefono", source = "persona.telefono")
     List<UtenteDto> utenteListToUtenteDtoList(List<Utente> utenteList);
 
     List<Utente> utenteDtoListToUtenteList(List<UtenteDto> utenteDtoList);
+
+    default List<UtenteDto> toDtoPage(Page<Utente> utentePage) {
+        return utentePage
+                .stream()
+                .map(this::utenteToUtenteDto)
+                .toList();
+    }
+
+
+
 
 //    @Named("inizioIscrizione")
 //    default Date setInizioIscrizione(Date inizioIscrizione) {

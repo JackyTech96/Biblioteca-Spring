@@ -3,15 +3,23 @@ package it.objectmethod.Biblioteca.service;
 import it.objectmethod.Biblioteca.dto.UtenteDto;
 import it.objectmethod.Biblioteca.entity.Persona;
 import it.objectmethod.Biblioteca.entity.Utente;
+import it.objectmethod.Biblioteca.entity.Utente_;
 import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
 import it.objectmethod.Biblioteca.excepction.OperationNotAllowedException;
+import it.objectmethod.Biblioteca.mapper.PagedMapper;
 import it.objectmethod.Biblioteca.mapper.PersonaMapper;
 import it.objectmethod.Biblioteca.mapper.UtenteMapper;
+import it.objectmethod.Biblioteca.pageable.PagedResponse;
 import it.objectmethod.Biblioteca.param.UtenteParams;
 import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import it.objectmethod.Biblioteca.repository.UtenteRepository;
+import it.objectmethod.Biblioteca.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -43,6 +51,7 @@ public class UtenteService {
      * @param utenteDto il dto dell'utente da creare
      * @return il dto dell'utente creato
      */
+    @Transactional
     public UtenteDto creaUtenteConPersona(final UtenteDto utenteDto) {
 
 //        PersonaDto personaDto = utenteDto.getPersona();
@@ -71,6 +80,17 @@ public class UtenteService {
         }
     }
 
+    public ApiResponse<List<UtenteDto>> creaMultipleUtentiConPersona(List<UtenteDto> utenteDtoList) {
+        for (UtenteDto utenteDto : utenteDtoList) {
+            try {
+                creaUtenteConPersona(utenteDto);
+            } catch (Exception e) {
+                throw new OperationNotAllowedException("Operazione di creazione non riuscita");
+            }
+        }
+        return new ApiResponse<>("Operazione riuscita", utenteDtoList);
+    }
+
     public UtenteDto findById(Long utenteId) {
         try {
             return utenteMapper.utenteToUtenteDto(utenteRepository.findById(utenteId).get());
@@ -86,4 +106,37 @@ public class UtenteService {
         }
         return utenteMapper.utenteListToUtenteDtoList(utenti);
     }
+
+    public PagedResponse<UtenteDto> searchUtenti(Pageable pageable, UtenteParams utenteParams) {
+        // Crea la Specification dalla classe UtenteParams
+        Specification<Utente> specification = utenteParams.toSpecification();
+
+        // Recupera la pagina con i criteri specificati e la paginazione
+        Page<Utente> utenti = utenteRepository.findAll(specification, pageable);
+
+        // Crea la lista di utenti da restituire
+        List<UtenteDto> utenteDtoList = utenti.getContent().stream()
+                .map(utenteMapper::utenteToUtenteDto)
+                .toList();
+
+        // Crea la risposta con la lista di utenti e la paginazione
+        return utenteMapper.toPagedResponse(utenteDtoList, utenti.getNumber(), utenti.getSize());
+        //TODO: creare il mapper per fare in modo di risolvere la mappattura per ogni oggetto da restituire
+    }
+
+//    public Page<UtenteDto> searchUtenti(Pageable pageable, UtenteParams utenteParams) {
+//        Specification<Utente> specification = utenteParams.toSpecification();
+//
+//        return utenteRepository.findAll(specification, pageable).map(utenteMapper::utenteToUtenteDto);
+//    }
+
+//    public PagedResponse<UtenteDto> searchUtenti(Pageable pageable) {
+//        Page<Utente> utenti = utenteRepository.findAll(pageable);
+//        return new PagedResponse<>(utenti.map(utenteMapper::utenteToUtenteDto));
+//    }
+
+//    public Page<UtenteDto> searchUtenti(Pageable pageable) {
+//        Page<Utente> utenti = utenteRepository.findAll(pageable);
+//        return utenti.map(utente -> utenteMapper.utenteToUtenteDto(utente));
+//    }
 }
