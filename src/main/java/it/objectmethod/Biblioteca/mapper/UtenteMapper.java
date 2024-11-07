@@ -4,16 +4,12 @@ import it.objectmethod.Biblioteca.dto.UtenteDto;
 import it.objectmethod.Biblioteca.entity.Utente;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.springframework.data.domain.Page;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface UtenteMapper extends PagedMapper<UtenteDto, Utente> {
+public interface UtenteMapper {
 
     @Mapping(target = "personaId", source = "persona.personaId")
     @Mapping(target = "nome", source = "persona.nome")

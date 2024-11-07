@@ -38,6 +38,7 @@ public class CustomExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
     }
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorBody> handleConstraintViolationException(MethodArgumentNotValidException ex) {
 //        String message = ex.getConstraintViolations().stream()

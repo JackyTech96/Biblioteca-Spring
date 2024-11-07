@@ -1,7 +1,6 @@
 package it.objectmethod.Biblioteca.dto;
 
 import it.objectmethod.Biblioteca.enums.StatoMovimento;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

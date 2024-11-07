@@ -26,8 +26,7 @@ public class MovimentoLibroController {
     @PostMapping("")
     public ResponseEntity<ApiResponse<MovimentoLibroDto>> createMovimentoLibro(@RequestBody final MovimentoLibroDto movimentoLibroDto) {
         ApiResponse<MovimentoLibroDto> response = movimentoLibroService.createMovimentoLibro(movimentoLibroDto);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(response);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 }

@@ -1,6 +1,5 @@
 package it.objectmethod.Biblioteca.mapper;
 
-import it.objectmethod.Biblioteca.dto.UtenteDto;
 import it.objectmethod.Biblioteca.pageable.PagedResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,5 +20,5 @@ public interface PagedMapper {
     @Mapping(target = "content", source = "content")
     @Mapping(target = "page", source = "page")
     @Mapping(target = "size", source = "size")
-    PagedResponse<UtenteDto> toPagedResponse(List<UtenteDto> content, int page, int size);
+    PagedResponse<T> toPagedResponse(List<T> content, int page, int size);
 }

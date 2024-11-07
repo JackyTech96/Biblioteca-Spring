@@ -1,20 +1,16 @@
 package it.objectmethod.Biblioteca.service;
 
-import it.objectmethod.Biblioteca.dto.LibroDto;
 import it.objectmethod.Biblioteca.dto.LibroExportDto;
 import it.objectmethod.Biblioteca.dto.PersonaDto;
-import it.objectmethod.Biblioteca.entity.Persona;
 import it.objectmethod.Biblioteca.mapper.LibroMapper;
 import it.objectmethod.Biblioteca.mapper.PersonaMapper;
 import it.objectmethod.Biblioteca.repository.LibroRepository;
 import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import it.objectmethod.Biblioteca.utility.FileExportUtility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

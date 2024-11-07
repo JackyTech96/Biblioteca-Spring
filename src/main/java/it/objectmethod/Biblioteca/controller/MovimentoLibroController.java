@@ -1,10 +1,8 @@
 package it.objectmethod.Biblioteca.controller;
 
 import it.objectmethod.Biblioteca.dto.MovimentoLibroDto;
-import it.objectmethod.Biblioteca.entity.MovimentoLibro;
 import it.objectmethod.Biblioteca.response.ApiResponse;
 import it.objectmethod.Biblioteca.service.MovimentoLibroService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

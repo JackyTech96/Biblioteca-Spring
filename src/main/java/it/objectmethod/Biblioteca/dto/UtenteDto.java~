@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UtenteDto extends PersonaDetail {
+public class UtenteDto {
 
     @NotNull(message = "La data di inizio iscrizione non può essere nulla")
     @Past(message = "La data di inizio iscrizione deve essere nel passato")
@@ -25,11 +25,11 @@ public class UtenteDto extends PersonaDetail {
     @Future(message = "La data di fine iscrizione deve essere nel futuro")
     private Date fineIscrizione;
 
-//    private Long personaId;
-//    private String nome;
-//    @Email(message = "L'email deve essere valida")
-//    private String email;
-//    private String telefono;
+    private Long personaId;
+    private String nome;
+    @Email(message = "L'email deve essere valida")
+    private String email;
+    private String telefono;
 //    private List<PrenotazioneDto> prenotazioni;
 //    private List<MovimentoLibroDto> movimentiLibro;
 }

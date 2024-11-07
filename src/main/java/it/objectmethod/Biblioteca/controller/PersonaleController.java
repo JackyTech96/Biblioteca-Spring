@@ -1,7 +1,6 @@
 package it.objectmethod.Biblioteca.controller;
 
 import it.objectmethod.Biblioteca.dto.PersonaleDto;
-import it.objectmethod.Biblioteca.enums.NomeRuolo;
 import it.objectmethod.Biblioteca.service.PersonaleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

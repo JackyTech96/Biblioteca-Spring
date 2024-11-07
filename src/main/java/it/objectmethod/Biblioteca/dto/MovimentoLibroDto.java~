@@ -18,7 +18,6 @@ public class MovimentoLibroDto {
     @NotNull(message = "La data di prestito non può essere nulla")
     private Date dataPrestito;
 
-    @NotNull(message = "La data di scadenza restituzione non può essere nulla")
     private Date dataScadenzaRestituzione;
 
     private Date dataRestituzione;

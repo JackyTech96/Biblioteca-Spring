@@ -8,7 +8,6 @@ import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
 import it.objectmethod.Biblioteca.excepction.OperationNotAllowedException;
 import it.objectmethod.Biblioteca.mapper.PersonaMapper;
 import it.objectmethod.Biblioteca.mapper.PersonaleMapper;
-import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import it.objectmethod.Biblioteca.repository.PersonaleRepository;
 import it.objectmethod.Biblioteca.repository.RuoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;

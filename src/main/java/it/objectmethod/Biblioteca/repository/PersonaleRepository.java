@@ -1,7 +1,6 @@
 package it.objectmethod.Biblioteca.repository;
 
 import it.objectmethod.Biblioteca.entity.Personale;
-import it.objectmethod.Biblioteca.enums.NomeRuolo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

@@ -39,7 +39,7 @@ public class UtenteService {
     @Autowired
     private PersonaMapper personaMapper;
     @Autowired
-    private PagedMapper pagedMapper;
+    private PagedMapper<UtenteDto> pagedMapper;
 
     public List<UtenteDto> findAll() {
         return utenteMapper.utenteListToUtenteDtoList(utenteRepository.findAll());
