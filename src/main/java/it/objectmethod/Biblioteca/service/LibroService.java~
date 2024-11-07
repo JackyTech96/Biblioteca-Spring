@@ -54,7 +54,7 @@ public class LibroService {
      * Cancella i libri che non hanno ISBN o che non contengono l'anno di pubblicazione
      * nell'ISBN e crea un backup in Excel prima della sanificazione.
      */
-
+    @Transactional
     public void sanitizeLibriByIsbn() {
         // Recupera tutti i libri dal database
         List<Libro> libri = libroRepository.findAll();

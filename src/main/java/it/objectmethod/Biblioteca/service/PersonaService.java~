@@ -62,7 +62,7 @@ public class PersonaService {
         // Sanifica le persone non valide
         for (Persona persona : personasWithLowerCaseNames) {
             String nomeCorretto = excelExportService.capitalizeFirstLetter(persona.getNome());
-            if (nomeCorretto == null || nomeCorretto.equals(persona.getNome())) {
+            if (nomeCorretto == null || nomeCorretto.isEmpty()) {
                 throw new InvalidPersonaNameException("Il nome non è stato correttamente sanificato per la persona con ID: " + persona.getPersonaId());
             }
             persona.setNome(nomeCorretto);
