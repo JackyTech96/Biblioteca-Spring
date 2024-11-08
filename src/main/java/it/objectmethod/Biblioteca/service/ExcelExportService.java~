@@ -70,7 +70,7 @@ public class ExcelExportService {
     }
 
     //Metodo per modificare la prima lettera del nome in maiuscolo
-    private String capitalizeFirstLetter(String name) {
+    public String capitalizeFirstLetter(String name) {
         if (name == null || name.isEmpty()) {
             return name;
         }

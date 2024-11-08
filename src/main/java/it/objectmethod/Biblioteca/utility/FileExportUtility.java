@@ -24,7 +24,7 @@ public class FileExportUtility {
         // Controlla se la directory esiste già
         if (!directory.exists()) {
             // Crea la directory se non esiste
-            directory.mkdir();
+            directory.mkdirs();
         }
     }
 
@@ -36,7 +36,8 @@ public class FileExportUtility {
      * @throws IOException Se si verifica un errore durante la scrittura del file.
      */
 
-    public <T> void createFileWithSheets(final String filename, final Map<String, List<T>> mapData) throws IOException {
+    public <T> void createFileWithSheets(final String filename, final Map<String, List<T>> mapData)
+            throws IOException {
         // Crea la directory file-storage se non esiste
         createDirectory();
 
@@ -75,7 +76,7 @@ public class FileExportUtility {
                                 row.createCell(i).setCellValue(fieldValue != null ? fieldValue.toString() : "");
                             } catch (IllegalAccessException e) {
                                 // Gestione dell'eccezione se non si riesce ad accedere al campo
-                                e.printStackTrace(); // Stampa lo stack trace per il debug
+                                System.err.println("Eccezione durante l'accesso al campo: " + fields[i].getName());
                             }
                         }
                     }
