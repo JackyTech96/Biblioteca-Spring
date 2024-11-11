@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +41,8 @@ public class UtenteService {
     private PersonaMapper personaMapper;
     @Autowired
     private PagedMapper pagedMapper;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public List<UtenteDto> findAll() {
         return utenteMapper.utenteListToUtenteDtoList(utenteRepository.findAll());
@@ -60,6 +63,7 @@ public class UtenteService {
         persona.setNome(utenteDto.getNome());
         persona.setEmail(utenteDto.getEmail());
         persona.setTelefono(utenteDto.getTelefono());
+        persona.setPassword(passwordEncoder.encode(utenteDto.getPassword()));
         persona = personaRepository.save(persona);
 
         // Imposto la data di inizio iscrizione e fine iscrizione

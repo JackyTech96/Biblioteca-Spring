@@ -7,13 +7,26 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import it.objectmethod.Biblioteca.constant.Constants;
 import it.objectmethod.Biblioteca.entity.Persona;
+import it.objectmethod.Biblioteca.repository.PersonaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
 
 @Service
-public class JWTService {
+public class JwtService {
+
+    @Autowired
+    private PersonaRepository personaRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+//    @Value("${jwt.secret}") // modo più sicuro
+//    private String secret;
 
     /**
      * Genera un token JWT con scadenza di 1 giorno e chiave di firma
@@ -39,7 +52,7 @@ public class JWTService {
     }
 
     /**
-     * Verifica se il token JWT  valido.
+     * Verifica se il token JWT è valido.
      *
      * @param token il token JWT da verificare
      * @return true se il token  valido, false altrimenti
@@ -60,5 +73,17 @@ public class JWTService {
             System.err.println("Token non valido: " + e.getMessage());
             return false;
         }
+    }
+
+    public String authenticateAndGenerateToken(String email, String password) {
+        // Implemento la logica per autenticare l'utente e generare il token JWT
+        Persona persona = personaRepository.findByEmail(email);
+        if (persona != null) {
+            if (!passwordEncoder.matches(password, persona.getPassword())) {
+                throw new IllegalArgumentException("Password non corretta");
+            }
+            return generateToken(persona);
+        }
+        throw new IllegalArgumentException("Utente non trovato");
     }
 }

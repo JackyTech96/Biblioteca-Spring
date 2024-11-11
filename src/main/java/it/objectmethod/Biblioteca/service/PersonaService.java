@@ -7,6 +7,7 @@ import it.objectmethod.Biblioteca.excepction.InvalidPersonaNameException;
 import it.objectmethod.Biblioteca.mapper.PersonaMapper;
 import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,25 +23,29 @@ public class PersonaService {
     @Autowired
     private ExcelExportService excelExportService;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     public List<PersonaDto> findAll() {
         return personaMapper.personaListToPersonaDtoList(personaRepository.findAll());
     }
 
     public PersonaDto createPersona(final PersonaDto personaDto) {
-        return personaMapper.personaToPersonaDto(personaRepository.save(personaMapper.personaDtoToPersona(personaDto)));
+
+        if (personaDto.getPassword() == null || personaDto.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("La password non puo essere vuota");
+        }
+        Persona persona = personaMapper.personaDtoToPersona(personaDto);
+        persona.setPassword(passwordEncoder.encode(persona.getPassword()));
+        return personaMapper.personaToPersonaDto(personaRepository.save(persona));
     }
 
-    protected Persona getPersonaById(final Long id) {
+
+    public Persona getPersonaById(final Long id) {
         return personaRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException(String.format("Persona con id %d non trovata", id)));
     }
 
-    protected Persona createPersona(final Persona personaDto) {
-        if (personaRepository.existsById(personaDto.getPersonaId())) {
-            throw new ElementNotFoundException(String.format("Persona con id %d già esistente", personaDto.getPersonaId()));
-        }
-        return personaRepository.save(personaDto);
-    }
 
     /**
      * Cancella le persone che non hanno il nome in maiuscolo e crea un backup in Excel

@@ -29,6 +29,7 @@ public class UtenteDto {
     @Email(message = "L'email deve essere valida")
     private String email;
     private String telefono;
+    private String password;
 //    private List<PrenotazioneDto> prenotazioni;
 //    private List<MovimentoLibroDto> movimentiLibro;
 }

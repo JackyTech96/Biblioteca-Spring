@@ -13,4 +13,6 @@ public interface PersonaRepository extends JpaRepository<Persona, Long>, JpaSpec
     //@Query("SELECT p FROM Persona p WHERE p.nome LIKE '[a-z]%'")
     @Query(value = "SELECT * FROM persona p WHERE BINARY LEFT(p.nome, 1) = LOWER(LEFT(p.nome, 1)) AND BINARY LEFT(p.nome, 1) != UPPER(LEFT(p.nome, 1))", nativeQuery = true)
     List<Persona> findAllWithNomeStartingWithLowerCase();
+
+    Persona findByEmail(String email);
 }

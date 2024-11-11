@@ -31,7 +31,8 @@ public class Persona {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "admin", columnDefinition = "boolean default false")
+    @Column(name = "admin")
+    @Value("false")
     private boolean admin;
 
     @Column(name = "telefono")

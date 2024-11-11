@@ -34,6 +34,8 @@ public class PersonaleDto {
     @NotBlank(message = "Il telefono non può essere vuoto")
     private String telefono;
 
+    private String password;
+
     @NotNull(message = "Il ruolo non può essere nullo")
     private RuoloDto ruolo;
 }

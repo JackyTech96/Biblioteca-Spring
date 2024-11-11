@@ -23,7 +23,6 @@ public class PersonaDto {
     @NotBlank(message = "L'email non può essere vuota")
     private String email;
     private String telefono;
-    private String password;
 
 //    private List<UtenteDto> utenti;
 //    private List<PersonaleDto> personale;
