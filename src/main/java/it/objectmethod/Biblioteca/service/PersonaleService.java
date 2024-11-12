@@ -9,6 +9,7 @@ import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
 import it.objectmethod.Biblioteca.excepction.OperationNotAllowedException;
 import it.objectmethod.Biblioteca.mapper.PersonaMapper;
 import it.objectmethod.Biblioteca.mapper.PersonaleMapper;
+import it.objectmethod.Biblioteca.param.PersonaleParams;
 import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import it.objectmethod.Biblioteca.repository.PersonaleRepository;
 import it.objectmethod.Biblioteca.repository.RuoloRepository;
@@ -29,6 +30,7 @@ public class PersonaleService {
 
     @Autowired
     private PersonaRepository personaRepository;
+
     @Autowired
     private PersonaService personaService;
 
@@ -83,6 +85,14 @@ public class PersonaleService {
         List<Personale> personaleList = personaleRepository.findByRuolo_NomeRuolo(nomeRuolo);
         if (personaleList.isEmpty()) {
             throw new ElementNotFoundException("Nessun personale trovato con il ruolo " + nomeRuolo);
+        }
+        return personaleMapper.personaleListToPersonaleDtoList(personaleList);
+    }
+
+    public List<PersonaleDto> findWithSpecification(final PersonaleParams params) {
+        List<Personale> personaleList = personaleRepository.findAll(params.toSpecification());
+        if (personaleList.isEmpty()) {
+            throw new ElementNotFoundException("Nessun personale trovato con i criteri specificati.");
         }
         return personaleMapper.personaleListToPersonaleDtoList(personaleList);
     }

@@ -1,5 +1,6 @@
 package it.objectmethod.Biblioteca.service;
 
+import io.micrometer.common.util.StringUtils;
 import it.objectmethod.Biblioteca.dto.PersonaDto;
 import it.objectmethod.Biblioteca.entity.Persona;
 import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
@@ -32,7 +33,7 @@ public class PersonaService {
 
     public PersonaDto createPersona(final PersonaDto personaDto) {
 
-        if (personaDto.getPassword() == null || personaDto.getPassword().isEmpty()) {
+        if (StringUtils.isBlank(personaDto.getPassword())) {
             throw new IllegalArgumentException("La password non puo essere vuota");
         }
         Persona persona = personaMapper.personaDtoToPersona(personaDto);

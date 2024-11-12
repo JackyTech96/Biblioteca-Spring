@@ -29,6 +29,7 @@ public class PersonaleService {
 
     @Autowired
     private PersonaRepository personaRepository;
+
     @Autowired
     private PersonaService personaService;
 
@@ -53,7 +54,7 @@ public class PersonaleService {
         persona.setTelefono(personaleDto.getTelefono());
         persona.setPassword(passwordEncoder.encode(personaleDto.getPassword()));
 
-        persona = personaRepository.sa(persona);
+        persona = personaRepository.save(persona);
 
 
         // Creazione e salvataggio del ruolo

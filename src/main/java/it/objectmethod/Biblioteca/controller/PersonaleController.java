@@ -1,9 +1,11 @@
 package it.objectmethod.Biblioteca.controller;
 
 import it.objectmethod.Biblioteca.dto.PersonaleDto;
+import it.objectmethod.Biblioteca.param.PersonaleParams;
 import it.objectmethod.Biblioteca.service.PersonaleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,5 +36,10 @@ public class PersonaleController {
     @GetMapping("/ruolo/{nomeRuolo}")
     public List<PersonaleDto> findPersonaleByNomeRuolo(@Valid @PathVariable final String nomeRuolo) {
         return personaleService.findPersonaleByNomeRuolo(nomeRuolo);
+    }
+
+    @GetMapping("/spec")
+    public List<PersonaleDto> getPersonaleBySpec(@Valid final PersonaleParams params) {
+        return personaleService.findWithSpecification(params);
     }
 }

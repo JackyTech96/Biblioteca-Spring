@@ -15,21 +15,21 @@ public interface UtenteMapper {
     @Mapping(target = "nome", source = "persona.nome")
     @Mapping(target = "email", source = "persona.email")
     @Mapping(target = "telefono", source = "persona.telefono")
+    @Mapping(target = "password", source = "persona.password")
     UtenteDto utenteToUtenteDto(Utente utente);
 
-    //    @Mapping(target = "personaId", source = "persona.personaId")
-//    @Mapping(target = "nome", source = "persona.nome")
-//    @Mapping(target = "email", source = "persona.email")
-//    @Mapping(target = "telefono", source = "persona.telefono")
+    @Mapping(target = "persona.personaId", source = "personaId")
+    @Mapping(target = "persona.nome", source = "nome")
+    @Mapping(target = "persona.email", source = "email")
+    @Mapping(target = "persona.telefono", source = "telefono")
+    @Mapping(target = "persona.password", source = "password")
     Utente utenteDtoToUtente(UtenteDto utenteDto);
 
-    //    @Mapping(target = "inizioIscrizione", source = "inizioIscrizione", qualifiedByName = "inizioIscrizione")
-//    @Mapping(target = "fineIscrizione", source = "fineIscrizione", qualifiedByName = "fineIscrizione")
-//    Utente toCreateUtente(UtenteDto utenteDto);
     @Mapping(target = "personaId", source = "persona.personaId")
     @Mapping(target = "nome", source = "persona.nome")
     @Mapping(target = "email", source = "persona.email")
     @Mapping(target = "telefono", source = "persona.telefono")
+    @Mapping(target = "password", source = "persona.password")
     List<UtenteDto> utenteListToUtenteDtoList(List<Utente> utenteList);
 
     List<Utente> utenteDtoListToUtenteList(List<UtenteDto> utenteDtoList);
@@ -40,8 +40,6 @@ public interface UtenteMapper {
                 .map(this::utenteToUtenteDto)
                 .toList();
     }
-
-
 
 
 //    @Named("inizioIscrizione")

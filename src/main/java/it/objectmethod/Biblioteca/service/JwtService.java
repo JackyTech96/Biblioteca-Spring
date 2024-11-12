@@ -25,8 +25,8 @@ public class JwtService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-//    @Value("${jwt.secret}") // modo più sicuro
-//    private String secret;
+    @Value("${password.jwt}") // modo più sicuro
+    private String secret;
 
     /**
      * Genera un token JWT con scadenza di 1 giorno e chiave di firma
@@ -38,14 +38,16 @@ public class JwtService {
 
         // Calcola la scadenza del token
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, 1); //Imposta la data di scadenza di 1 giorno
+//        calendar.add(Calendar.DAY_OF_YEAR, 1); //Imposta la data di scadenza di 1 giorno
+        calendar.add(Calendar.MINUTE, 1);
         Date scadenza = calendar.getTime();
 
         // Genera il token con la chiave di firma
-        Algorithm algorithm = Algorithm.HMAC256(Constants.JWT_SECRET);
+        Algorithm algorithm = Algorithm.HMAC256(secret);
         String token = JWT.create()
                 .withSubject(persona.getEmail())
                 .withClaim("id", persona.getPersonaId())
+                .withClaim("admin", persona.isAdmin())
                 .withExpiresAt(scadenza)
                 .sign(algorithm);
         return token;
@@ -60,14 +62,15 @@ public class JwtService {
     public boolean validateToken(String token) {
         try {
             // Verifica il token con la chiave di firma
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(Constants.JWT_SECRET))
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret))
                     .build();
             DecodedJWT decodedJWT = verifier.verify(token);
 
             String email = decodedJWT.getSubject();
             Long personaId = decodedJWT.getClaim("id").asLong();
+            boolean isAdmin = decodedJWT.getClaim("admin").asBoolean();
 
-            System.out.println("Token valido per l'utente: " + email + " con ID: " + personaId);
+            System.out.println("Token valido per l'utente: " + email + " con ID: " + personaId + " admin: " + isAdmin);
             return true;
         } catch (JWTVerificationException e) {
             System.err.println("Token non valido: " + e.getMessage());
@@ -75,15 +78,23 @@ public class JwtService {
         }
     }
 
+    /**
+     * Verifica le credenziali dell'utente e restituisce il token JWT se le
+     * credenziali sono corrette.
+     *
+     * @param email    l'email dell'utente
+     * @param password la password dell'utente
+     * @return il token JWT se le credenziali sono corrette, null altrimenti
+     */
     public String authenticateAndGenerateToken(String email, String password) {
-        // Implemento la logica per autenticare l'utente e generare il token JWT
         Persona persona = personaRepository.findByEmail(email);
         if (persona != null) {
             if (!passwordEncoder.matches(password, persona.getPassword())) {
                 throw new IllegalArgumentException("Password non corretta");
             }
+            System.out.println("Autenticazione riuscita per l'utente: " + email);
             return generateToken(persona);
         }
-        throw new IllegalArgumentException("Utente non trovato");
+        throw new IllegalArgumentException("Login non riuscito");
     }
 }

@@ -1,6 +1,7 @@
 package it.objectmethod.Biblioteca.controller;
 
 import it.objectmethod.Biblioteca.dto.PersonaDto;
+import it.objectmethod.Biblioteca.response.ApiResponse;
 import it.objectmethod.Biblioteca.service.PersonaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ public class PersonaController {
     private PersonaService personaService;
 
     @GetMapping("")
-    public List<PersonaDto> getAllPersona() {
-        return personaService.findAll();
+    public ResponseEntity<ApiResponse<List<PersonaDto>>> getAllPersona() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>("Lista persone", personaService.findAll()));
     }
 
     @PostMapping("")
