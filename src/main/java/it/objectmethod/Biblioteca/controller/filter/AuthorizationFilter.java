@@ -28,7 +28,7 @@ public class AuthorizationFilter implements Filter {
 
         // Controllo se la richiesta e' per il login
         String path = request.getRequestURI();
-        if (path.contains("login")) {
+        if (path.equals("/jwt/login") || path.equals("/login")) {
             filterChain.doFilter(request, response);
         } else {
             // Controllo l'header di autorizzazione

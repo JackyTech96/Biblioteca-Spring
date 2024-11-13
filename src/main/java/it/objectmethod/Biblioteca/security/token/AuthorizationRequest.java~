@@ -1,0 +1,4 @@
+package it.objectmethod.Biblioteca.security.token;
+
+public class AuthorizationRequest {
+}
