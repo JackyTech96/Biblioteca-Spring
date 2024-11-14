@@ -31,10 +31,10 @@ public class JwtTokenProvider {
     @Autowired
     private PersonaRepository personaRepository;
 
-    private String createToken(final Map<String, Object> claims, final String subject) {
+    private String createToken(final Map<String, Object> claims, final Long subject) {
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         return Jwts.builder()
-                .subject(subject)
+                .subject(subject.toString())
                 .claims(claims)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
@@ -46,7 +46,7 @@ public class JwtTokenProvider {
         final Map<String, Object> claims = new HashMap<>();
         claims.put("email", request.getEmail());
         claims.put("admin", request.getIsAdmin());
-        return createToken(claims, request.getId().toString());
+        return createToken(claims, request.getId());
     }
 
     public String authenticateAndGenerateToken(final AuthorizationRequest request, final String email, final String password) {

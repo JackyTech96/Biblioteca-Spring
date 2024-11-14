@@ -56,4 +56,14 @@ public class CustomExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
     }
+    @ExceptionHandler(LoginFailedException.class)
+    public ResponseEntity<ErrorBody> handleLoginFailedException(LoginFailedException e) {
+        ErrorBody errorBody = ErrorBody.builder()
+                .message(e.getMessage())
+                .description("Login fallito")
+                .timestamp(LocalDateTime.now())
+                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorBody);
+    }
 }

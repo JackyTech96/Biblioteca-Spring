@@ -16,7 +16,7 @@ public interface PersonaRepository extends JpaRepository<Persona, Long>, JpaSpec
     List<Persona> findAllWithNomeStartingWithLowerCase();
 
     //    Persona findByEmail(String email);
-    Optional<Persona> findByEmail(String email);
+    Optional<Persona> findByEmailAndAdmin(String email, boolean admin);
 
     boolean existsByPassword(String password);
 }

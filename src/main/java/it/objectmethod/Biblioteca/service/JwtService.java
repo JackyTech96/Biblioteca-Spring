@@ -11,6 +11,7 @@ import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -27,6 +28,7 @@ public class JwtService {
 
     @Value("${password.jwt}") // modo più sicuro
     private String secret;
+
 
     /**
      * Genera un token JWT con scadenza di 1 giorno e chiave di firma
@@ -47,7 +49,7 @@ public class JwtService {
         String token = JWT.create()
                 .withSubject(persona.getEmail())
                 .withClaim("id", persona.getPersonaId())
-                .withClaim("admin", persona.isAdmin())
+                .withClaim("admin", persona.getIsAdmin())
                 .withExpiresAt(scadenza)
                 .sign(algorithm);
         return token;
@@ -87,14 +89,13 @@ public class JwtService {
      * @return il token JWT se le credenziali sono corrette, null altrimenti
      */
     public String authenticateAndGenerateToken(String email, String password) {
-        Persona persona = personaRepository.findByEmail(email);
-        if (persona != null) {
-            if (!passwordEncoder.matches(password, persona.getPassword())) {
-                throw new IllegalArgumentException("Password non corretta");
-            }
-            System.out.println("Autenticazione riuscita per l'utente: " + email);
-            return generateToken(persona);
+        Persona persona = personaRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Login non riuscito"));
+
+        if (!passwordEncoder.matches(password, persona.getPassword())) {
+            throw new IllegalArgumentException("Password non corretta");
         }
-        throw new IllegalArgumentException("Login non riuscito");
+        System.out.println("Autenticazione riuscita per l'utente: " + email);
+        return generateToken(persona);
     }
 }

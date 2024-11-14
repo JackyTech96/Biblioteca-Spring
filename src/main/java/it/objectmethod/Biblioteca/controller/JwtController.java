@@ -1,10 +1,8 @@
 package it.objectmethod.Biblioteca.controller;
 
-import io.micrometer.common.util.StringUtils;
-import it.objectmethod.Biblioteca.dto.LoginDto;
-import it.objectmethod.Biblioteca.entity.Persona;
 import it.objectmethod.Biblioteca.response.ApiResponse;
-import it.objectmethod.Biblioteca.service.JwtService;
+import it.objectmethod.Biblioteca.security.token.AuthorizationRequest;
+import it.objectmethod.Biblioteca.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/jwt")
 public class JwtController {
     @Autowired
-    private JwtService jwtService;
+    private AuthService authService;
 
     @GetMapping("/generate")
-    public String generateToken(@RequestParam("email") String email, @RequestParam("id") Long id) {
-
-        Persona persona = new Persona();
-        persona.setEmail(email);
-        persona.setPersonaId(id);
-
-        return jwtService.generateToken(persona);
+    public String generateToken(@RequestBody final AuthorizationRequest request) {
+        return authService.createToken(request);
     }
 
 //    @GetMapping("/validate")
@@ -38,37 +31,15 @@ public class JwtController {
 //    }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(@RequestBody final LoginDto loginDto) {
-        try {
-            // Verifico se email e password sono state fornite
-            // if (loginDto.getEmail() == null || loginDto.getEmail().isEmpty())
-            if (StringUtils.isBlank(loginDto.getEmail())) {
-                return ResponseEntity
-                        .status(HttpStatus.BAD_REQUEST)
-                        .body(new ApiResponse<>("Email non fornita"));
-            }
-//            if (loginDto.getPassword() == null || loginDto.getPassword().isEmpty())
-            if (StringUtils.isBlank(loginDto.getPassword())) {
-                return ResponseEntity
-                        .status(HttpStatus.BAD_REQUEST)
-                        .body(new ApiResponse<>("Password non fornita"));
-            }
-
-            // Faccio la login con email e password
-            String token = jwtService.authenticateAndGenerateToken(loginDto.getEmail(), loginDto.getPassword());
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(new ApiResponse<>("Login riuscito", token));
-        } catch (IllegalArgumentException e) {
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody final AuthorizationRequest personaDto) {
+        final ApiResponse<String> token = authService.login(personaDto);
+        if (!authService.isValid(token.getData())) {
             // Se la login fallisce, restituisco un messaggio di errore
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(new ApiResponse<>("Login fallito"));
-        } catch (Exception e) {
-            // Se si verifica un errore interno del server, restituisco un messaggio di errore generico
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>("Errore interno del server"));
+            return new ResponseEntity<>(
+                    new ApiResponse<>("chi cazzo sei?"),
+                    HttpStatus.UNAUTHORIZED);
         }
+        token.setMessage("Login effettuato con successo");
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 }

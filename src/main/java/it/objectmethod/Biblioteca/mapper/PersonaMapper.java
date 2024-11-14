@@ -2,7 +2,9 @@ package it.objectmethod.Biblioteca.mapper;
 
 import it.objectmethod.Biblioteca.dto.PersonaDto;
 import it.objectmethod.Biblioteca.entity.Persona;
+import it.objectmethod.Biblioteca.security.token.AuthorizationRequest;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -15,4 +17,7 @@ public interface PersonaMapper {
     List<PersonaDto> personaListToPersonaDtoList(List<Persona> personaList);
 
     List<Persona> personaDtoListToPersonaList(List<PersonaDto> personaDtoList);
+
+    @Mapping(target = "id", source = "personaId")
+    AuthorizationRequest toRequestForToken(Persona persona);
 }

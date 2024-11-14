@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class LibroService {
@@ -37,6 +39,10 @@ public class LibroService {
             throw new ElementNotFoundException("Nessun libro trovato con i criteri specificati");
         }
         return libroMapper.libriToLibroDto(libri);
+//        return Optional.of(libroMapper.libriToLibroDto(libroRepository.findAll(libroParams.toSpecification())))
+//                .stream().filter(List::isEmpty)
+//                .findFirst()
+//                .orElseThrow(() -> new ElementNotFoundException("Nessun libro trovato con i criteri specificati"));
     }
 
     public LibroDto updateLibro(final LibroDto libroDto, final Long id) {

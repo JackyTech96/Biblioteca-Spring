@@ -11,6 +11,7 @@ import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -28,6 +29,7 @@ public class JwtService {
     @Value("${password.jwt}") // modo più sicuro
     private String secret;
 
+
     /**
      * Genera un token JWT con scadenza di 1 giorno e chiave di firma
      * definita nella costante Constants.JWT_SECRET.
@@ -38,8 +40,8 @@ public class JwtService {
 
         // Calcola la scadenza del token
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, 1); //Imposta la data di scadenza di 1 minuto
 //        calendar.add(Calendar.DAY_OF_YEAR, 1); //Imposta la data di scadenza di 1 giorno
+        calendar.add(Calendar.MINUTE, 1);
         Date scadenza = calendar.getTime();
 
         // Genera il token con la chiave di firma
@@ -66,13 +68,6 @@ public class JwtService {
                     .build();
             DecodedJWT decodedJWT = verifier.verify(token);
 
-            // Verifica se il token è scaduto
-            Date scadenza = decodedJWT.getExpiresAt();
-            if (scadenza.before(new Date())) {
-                System.err.println("Token scaduto");
-                return false;
-            }
-
             String email = decodedJWT.getSubject();
             Long personaId = decodedJWT.getClaim("id").asLong();
             boolean isAdmin = decodedJWT.getClaim("admin").asBoolean();
@@ -94,14 +89,13 @@ public class JwtService {
      * @return il token JWT se le credenziali sono corrette, null altrimenti
      */
     public String authenticateAndGenerateToken(String email, String password) {
-        Persona persona = personaRepository.findByEmail(email);
-        if (persona != null) {
-            if (!passwordEncoder.matches(password, persona.getPassword())) {
-                throw new IllegalArgumentException("Password non corretta");
-            }
-            System.out.println("Autenticazione riuscita per l'utente: " + email);
-            return generateToken(persona);
+        Persona persona = personaRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Login non riuscito"));
+
+        if (!passwordEncoder.matches(password, persona.getPassword())) {
+            throw new IllegalArgumentException("Password non corretta");
         }
-        throw new IllegalArgumentException("Login non riuscito");
+        System.out.println("Autenticazione riuscita per l'utente: " + email);
+        return generateToken(persona);
     }
 }

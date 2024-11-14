@@ -17,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "persona")
 public class Persona {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "persona_id")
@@ -32,7 +33,7 @@ public class Persona {
     private String password;
 
     @Column(name = "admin", columnDefinition = "boolean default false")
-    private boolean admin;
+    private Boolean isAdmin;
 
     @Column(name = "telefono")
     @Nullable

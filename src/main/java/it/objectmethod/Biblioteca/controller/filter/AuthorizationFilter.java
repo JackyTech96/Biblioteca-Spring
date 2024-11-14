@@ -1,5 +1,6 @@
 package it.objectmethod.Biblioteca.controller.filter;
 
+import it.objectmethod.Biblioteca.security.token.JwtTokenProvider;
 import it.objectmethod.Biblioteca.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -16,8 +17,11 @@ import java.io.IOException;
 @Order(2)
 public class AuthorizationFilter implements Filter {
 
+//    @Autowired
+//    JwtService jwtService;
+
     @Autowired
-    JwtService jwtService;
+    JwtTokenProvider jwtTokenProvider;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
@@ -28,7 +32,7 @@ public class AuthorizationFilter implements Filter {
 
         // Controllo se la richiesta e' per il login
         String path = request.getRequestURI();
-        if (path.equals("/jwt/login") || path.equals("/login")) {
+        if (path.equals("/jwt/login") || path.equals("/login") || path.equals("/jwt/generate")) {
             filterChain.doFilter(request, response);
         } else {
             // Controllo l'header di autorizzazione
@@ -36,11 +40,11 @@ public class AuthorizationFilter implements Filter {
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token non presente");
             } else {
-                // Estraggo il token dall'header
+                // Estraggo il token dall'header --> leggo da dopo Bearer
                 String token = authHeader.substring(7);
 
                 // Implemento la logica di validazione del token qui
-                if (!jwtService.validateToken(token)) {
+                if (!jwtTokenProvider.isTokenValid(token)) {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token non valido o scaduto");
                 } else {
                     filterChain.doFilter(request, response);
