@@ -49,16 +49,16 @@ public class JwtTokenProvider {
         return createToken(claims, request.getId().toString());
     }
 
-    public String authenticateAndGenerateToken(final AuthorizationRequest request, final String email, final String password) {
-        Persona persona = personaRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Login non riuscito"));
-
-        if (!passwordEncoder.matches(password, (persona.getPassword()))) {
-            throw new IllegalArgumentException("Login non riuscito");
-        }
-        System.out.println("Autenticazione riuscita per l'utente: " + email);
-        return generateToken(request);
-    }
+//    public String authenticateAndGenerateToken(final AuthorizationRequest request, final String email, final String password) {
+//        Persona persona = personaRepository.findByEmail(email)
+//                .orElseThrow(() -> new IllegalArgumentException("Login non riuscito"));
+//
+//        if (!passwordEncoder.matches(password, (persona.getPassword()))) {
+//            throw new IllegalArgumentException("Login non riuscito");
+//        }
+//        System.out.println("Autenticazione riuscita per l'utente: " + email);
+//        return generateToken(request);
+//    }
 
 
     private Claims extractAllClaims(String token) {

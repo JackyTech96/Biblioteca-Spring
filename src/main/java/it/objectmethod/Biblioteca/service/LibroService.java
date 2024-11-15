@@ -6,14 +6,15 @@ import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
 import it.objectmethod.Biblioteca.mapper.LibroMapper;
 import it.objectmethod.Biblioteca.param.LibroParams;
 import it.objectmethod.Biblioteca.repository.LibroRepository;
+import it.objectmethod.Biblioteca.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+
 
 @Service
 public class LibroService {
@@ -28,21 +29,18 @@ public class LibroService {
         return libroMapper.libriToLibroDto(libroRepository.findAll());
     }
 
-    public LibroDto createLibro(final LibroDto libroDto) {
+    public ApiResponse<LibroDto> createLibro(final LibroDto libroDto) {
         Libro libro = libroMapper.libroDtoToLibro(libroDto);
-        return libroMapper.libroToLibroDto(libroRepository.save(libro));
+        LibroDto libroDtoToSave = libroMapper.libroToLibroDto(libroRepository.save(libro));
+        return new ApiResponse<>("Libro creato con successo", libroDtoToSave);
     }
 
     public List<LibroDto> findWithSpecification(final LibroParams libroParams) {
-        List<Libro> libri = libroRepository.findAll(libroParams.toSpecification());
-        if (libri.isEmpty()) {
-            throw new ElementNotFoundException("Nessun libro trovato con i criteri specificati");
-        }
-        return libroMapper.libriToLibroDto(libri);
-//        return Optional.of(libroMapper.libriToLibroDto(libroRepository.findAll(libroParams.toSpecification())))
-//                .stream().filter(List::isEmpty)
-//                .findFirst()
-//                .orElseThrow(() -> new ElementNotFoundException("Nessun libro trovato con i criteri specificati"));
+        return Optional.of(libroMapper.libriToLibroDto(libroRepository.findAll(libroParams.toSpecification())))
+                .stream()
+                .filter(List::isEmpty)
+                .findFirst()
+                .orElseThrow(() -> new ElementNotFoundException("Nessun libro trovato con i criteri specificati"));
     }
 
     public LibroDto updateLibro(final LibroDto libroDto, final Long id) {

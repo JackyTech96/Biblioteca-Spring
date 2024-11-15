@@ -17,9 +17,6 @@ import java.io.IOException;
 @Order(2)
 public class AuthorizationFilter implements Filter {
 
-//    @Autowired
-//    JwtService jwtService;
-
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 

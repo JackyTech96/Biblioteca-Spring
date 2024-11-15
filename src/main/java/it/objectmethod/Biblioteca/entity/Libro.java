@@ -44,18 +44,6 @@ public class Libro {
     @Column(name = "copie")
     private Integer copie;
 
-//    public List<String> allProperties() {
-//        String libroId = String.valueOf(this.libroId);
-//        String titolo = this.titolo;
-//        String autore = this.autore;
-//        String isbn = this.isbn;
-//        String genere = this.genere;
-//        String editore = this.editore;
-//        String annoPubblicazione = String.valueOf(this.annoPubblicazione);
-//        String copie = String.valueOf(this.copie);
-//        return List.of(libroId, titolo, autore, isbn, genere, editore, annoPubblicazione, copie);
-//    }
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "libro")
     private List<Prenotazione> prenotazioni;
 

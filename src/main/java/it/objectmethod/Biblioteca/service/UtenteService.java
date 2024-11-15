@@ -56,7 +56,7 @@ public class UtenteService {
      * @return il dto dell'utente creato
      */
     @Transactional
-    public UtenteDto creaUtenteConPersona(final UtenteDto utenteDto) {
+    public ApiResponse<UtenteDto> creaUtenteConPersona(final UtenteDto utenteDto) {
 
 //        PersonaDto personaDto = utenteDto.getPersona();
         Persona persona = new Persona();
@@ -79,7 +79,8 @@ public class UtenteService {
             Utente utente = utenteMapper.utenteDtoToUtente(utenteDto);
             utente.setPersona(persona);
             utenteRepository.save(utente);
-            return utenteMapper.utenteToUtenteDto(utente);
+            UtenteDto utenteDtoSalvato = utenteMapper.utenteToUtenteDto(utente);
+            return new ApiResponse<>("Operazione riuscita", utenteDtoSalvato);
         } catch (RuntimeException e) {
             throw new OperationNotAllowedException("Operazione di salvataggio non riuscita");
         }

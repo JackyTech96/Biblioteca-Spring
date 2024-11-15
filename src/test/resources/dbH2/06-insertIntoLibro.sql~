@@ -1,0 +1,3 @@
+INSERT INTO "LIBRO" VALUES
+(1, 'il signore degli anelli', 'J.R.R. Tolkien', '9788804652787', '1954-01-01', 432),
+(2, 'Harry Potter e la pietra filosofale', 'J.K. Rowling', '9780747532743', '1997-06-26', 223);

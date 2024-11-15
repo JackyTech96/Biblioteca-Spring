@@ -13,6 +13,7 @@ import it.objectmethod.Biblioteca.param.PersonaleParams;
 import it.objectmethod.Biblioteca.repository.PersonaRepository;
 import it.objectmethod.Biblioteca.repository.PersonaleRepository;
 import it.objectmethod.Biblioteca.repository.RuoloRepository;
+import it.objectmethod.Biblioteca.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class PersonaleService {
         return personaleMapper.personaleListToPersonaleDtoList(personaleRepository.findAll());
     }
 
-    public PersonaleDto createPersonaleConPersona(final PersonaleDto personaleDto) {
+    public ApiResponse<PersonaleDto> createPersonaleConPersona(final PersonaleDto personaleDto) {
         // Creazione della persona
         Persona persona = new Persona();
         persona.setNome(personaleDto.getNome());
@@ -70,7 +71,8 @@ public class PersonaleService {
 
         // Salvataggio del personale
         personaleRepository.save(personale);
-        return personaleMapper.personaleToPersonaleDto(personale);
+        PersonaleDto personaleDtoCreated = personaleMapper.personaleToPersonaleDto(personale);
+        return new ApiResponse<>("Personale creato con successo", personaleDtoCreated);
     }
 
     public PersonaleDto findPersonaleById(final Long id) {

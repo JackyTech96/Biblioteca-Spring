@@ -26,8 +26,11 @@ public class PersonaController {
     }
 
     @PostMapping("")
-    public ResponseEntity<PersonaDto> createPersona(@Valid @RequestBody final PersonaDto personaDto) {
-        PersonaDto createdPersona = personaService.createPersona(personaDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPersona);
+    public ResponseEntity<ApiResponse<PersonaDto>> createPersona(@Valid @RequestBody final PersonaDto personaDto) {
+        ApiResponse<PersonaDto> response = personaService.createPersona(personaDto);
+        response.setMessage("Persona creata correttamente");
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
 }

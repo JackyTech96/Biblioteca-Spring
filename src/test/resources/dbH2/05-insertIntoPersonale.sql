@@ -1,0 +1,3 @@
+INSERT INTO "PERSONALE" VALUES
+(1, 3, 1),
+(2, 4, 2);

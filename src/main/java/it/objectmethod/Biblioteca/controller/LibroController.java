@@ -2,9 +2,12 @@ package it.objectmethod.Biblioteca.controller;
 
 import it.objectmethod.Biblioteca.dto.LibroDto;
 import it.objectmethod.Biblioteca.param.LibroParams;
+import it.objectmethod.Biblioteca.response.ApiResponse;
 import it.objectmethod.Biblioteca.service.LibroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +24,9 @@ public class LibroController {
     }
 
     @PostMapping("")
-    public LibroDto createLibro(@Valid @RequestBody final LibroDto libroDto) {
-        return libroService.createLibro(libroDto);
+    public ResponseEntity<ApiResponse<LibroDto>> createLibro(@Valid @RequestBody final LibroDto libroDto) {
+        ApiResponse<LibroDto> response = libroService.createLibro(libroDto);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

@@ -7,6 +7,7 @@ import it.objectmethod.Biblioteca.excepction.ElementNotFoundException;
 import it.objectmethod.Biblioteca.excepction.InvalidPersonaNameException;
 import it.objectmethod.Biblioteca.mapper.PersonaMapper;
 import it.objectmethod.Biblioteca.repository.PersonaRepository;
+import it.objectmethod.Biblioteca.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,14 +32,15 @@ public class PersonaService {
         return personaMapper.personaListToPersonaDtoList(personaRepository.findAll());
     }
 
-    public PersonaDto createPersona(final PersonaDto personaDto) {
+    public ApiResponse<PersonaDto> createPersona(final PersonaDto personaDto) {
 
         if (StringUtils.isBlank(personaDto.getPassword())) {
             throw new IllegalArgumentException("La password non puo essere vuota");
         }
         Persona persona = personaMapper.personaDtoToPersona(personaDto);
         persona.setPassword(passwordEncoder.encode(persona.getPassword()));
-        return personaMapper.personaToPersonaDto(personaRepository.save(persona));
+        PersonaDto personaDtoToSave = personaMapper.personaToPersonaDto(personaRepository.save(persona));
+        return new ApiResponse<>("Persona creato con successo", personaDtoToSave);
     }
 
 

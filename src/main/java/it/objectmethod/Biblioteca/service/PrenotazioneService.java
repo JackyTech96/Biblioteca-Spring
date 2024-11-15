@@ -10,6 +10,7 @@ import it.objectmethod.Biblioteca.mapper.PrenotazioneMapper;
 import it.objectmethod.Biblioteca.repository.LibroRepository;
 import it.objectmethod.Biblioteca.repository.PrenotazioneRepository;
 import it.objectmethod.Biblioteca.repository.UtenteRepository;
+import it.objectmethod.Biblioteca.response.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class PrenotazioneService {
         return prenotazioneMapper.prenotazioneListToPrenotazioneDtoList(prenotazioneRepository.findAll());
     }
 
-    public PrenotazioneDto createPrenotazione(final PrenotazioneDto prenotazioneDto) {
+    public ApiResponse<PrenotazioneDto> createPrenotazione(final PrenotazioneDto prenotazioneDto) {
         // Imposta la data di prenotazione alla data attuale
         prenotazioneDto.setDataPrenotazione(new Date());
 
@@ -55,7 +56,10 @@ public class PrenotazioneService {
         prenotazione.setUtente(utente);
 
         // Salva la prenotazione nel repository
-        return prenotazioneMapper.prenotazioneToPrenotazioneDto(prenotazioneRepository.save(prenotazione));
+        PrenotazioneDto prenotazioneDtoToSave = prenotazioneMapper.prenotazioneToPrenotazioneDto(prenotazione);
+
+
+        return new ApiResponse<>("Prenotazione creata con successo", prenotazioneDtoToSave);
     }
 
 

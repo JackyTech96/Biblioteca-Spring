@@ -31,7 +31,7 @@ public class JwtController {
                     new ApiResponse<>("Errore di autenticazione: credenziali non valide"),
                     HttpStatus.UNAUTHORIZED);
         }
-
+        
 
         // Restituisce il token e un messaggio di successo con stato HTTP 200
         return new ResponseEntity<>(token, HttpStatus.OK);

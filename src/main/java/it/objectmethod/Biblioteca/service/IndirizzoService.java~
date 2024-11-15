@@ -20,7 +20,7 @@ public class IndirizzoService {
         return indirizzoMapper.indirizzoListToIndirizzoDtoList(indirizzoRepository.findAll());
     }
 
-    public IndirizzoDto createIndirizzo(IndirizzoDto indirizzoDto) {
+    public IndirizzoDto createIndirizzo(final IndirizzoDto indirizzoDto) {
         Indirizzo indirizzo = indirizzoMapper.indirizzoDtoToIndirizzo(indirizzoDto);
         return indirizzoMapper.indirizzoToIndirizzoDto(indirizzoRepository.save(indirizzo));
     }

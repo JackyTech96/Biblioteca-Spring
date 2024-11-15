@@ -28,8 +28,9 @@ public class UtenteController {
     }
 
     @PostMapping("")
-    public UtenteDto creaUtenteConPersona(@RequestBody final UtenteDto utenteDto) {
-        return utenteService.creaUtenteConPersona(utenteDto);
+    public ResponseEntity<ApiResponse<UtenteDto>> creaUtenteConPersona(@RequestBody final UtenteDto utenteDto) {
+        ApiResponse<UtenteDto> response = utenteService.creaUtenteConPersona(utenteDto);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/multiple")

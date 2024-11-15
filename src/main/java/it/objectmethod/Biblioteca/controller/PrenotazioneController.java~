@@ -21,7 +21,7 @@ public class PrenotazioneController {
     }
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse<PrenotazioneDto>> createPrenotazione(@RequestBody final PrenotazioneDto prenotazioneDto) {
+    public ResponseEntity<ApiResponse<PrenotazioneDto>> PrenotazioneDto createPrenotazione(@RequestBody final PrenotazioneDto prenotazioneDto) {
         ApiResponse<PrenotazioneDto> response = prenotazioneService.createPrenotazione(prenotazioneDto);
         return ResponseEntity.ok(response);
     }

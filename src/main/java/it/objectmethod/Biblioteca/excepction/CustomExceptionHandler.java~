@@ -40,7 +40,9 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorBody> handleConstraintViolationException(MethodArgumentNotValidException ex) {
-
+//        String message = ex.getConstraintViolations().stream()
+//                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+//                .collect(Collectors.joining(", "));
         String errorMessage = "Errore di validazione dati";
 
         Map<String, String> fieldErrors = ex.getBindingResult().getFieldErrors().stream()
