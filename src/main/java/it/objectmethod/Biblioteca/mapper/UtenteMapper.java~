@@ -24,7 +24,7 @@ public interface UtenteMapper {
     @Mapping(target = "persona.telefono", source = "telefono")
     @Mapping(target = "persona.password", source = "password")
     Utente utenteDtoToUtente(UtenteDto utenteDto);
-    
+
     @Mapping(target = "personaId", source = "persona.personaId")
     @Mapping(target = "nome", source = "persona.nome")
     @Mapping(target = "email", source = "persona.email")

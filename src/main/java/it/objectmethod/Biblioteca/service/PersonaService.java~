@@ -37,7 +37,7 @@ public class PersonaService {
         Persona persona = personaMapper.personaDtoToPersona(personaDto);
         persona.setPassword(passwordEncoder.encode(persona.getPassword()));
         PersonaDto personaDtoToSave = personaMapper.personaToPersonaDto(personaRepository.save(persona));
-        return new ApiResponse<>("Persona:", personaDtoToSave);
+        return new ApiResponse<>("Persona creato con successo", personaDtoToSave);
     }
 
 

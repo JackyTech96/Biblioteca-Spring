@@ -21,6 +21,7 @@ public interface PersonaleMapper {
     @Mapping(target = "persona.nome", source = "nome")
     @Mapping(target = "persona.email", source = "email")
     @Mapping(target = "persona.telefono", source = "telefono")
+    @Mapping(target = "persona.password", source = "password")
 //    @Mapping(target = "ruolo", source = "ruolo")
     Personale personaleDtoToPersonale(PersonaleDto personaleDto);
 

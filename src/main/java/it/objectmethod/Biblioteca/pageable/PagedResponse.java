@@ -17,7 +17,7 @@ public class PagedResponse<T> {
     private int page;
     private int size;
 
-    public PagedResponse(Page<T> page) {
+    public PagedResponse(Page<T> page) {// TODO: costruttore per la creazione dato un T del mio Oggetto PagedResponse
         this.content = page.getContent();
         this.page = page.getNumber();
         this.size = page.getSize();

@@ -1,6 +1,8 @@
 package it.objectmethod.Biblioteca.dto;
 
 import it.objectmethod.Biblioteca.enums.StatoMovimento;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +23,7 @@ public class MovimentoLibroDto {
 
     private Date dataRestituzione;
 
+    @Enumerated(EnumType.STRING)
     @NotNull(message = "Lo stato non può essere nullo")
     private StatoMovimento stato;
 

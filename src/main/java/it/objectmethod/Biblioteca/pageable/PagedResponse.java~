@@ -19,7 +19,7 @@ public class PagedResponse<T> {
 
     public PagedResponse(Page<T> page) {
         this.content = page.getContent();
-        this.page = page.getPageable().getPageNumber();
+        this.page = page.getNumber();
         this.size = page.getSize();
     }
 }

@@ -2,12 +2,13 @@ package it.objectmethod.Biblioteca.mapper;
 
 import it.objectmethod.Biblioteca.dto.PrenotazioneDto;
 import it.objectmethod.Biblioteca.entity.Prenotazione;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {LibroMapper.class, UtenteMapper.class})
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true), uses = {LibroMapper.class, UtenteMapper.class})
 public interface PrenotazioneMapper {
 
     @Mapping(target = "libroId", source = "libro.libroId")

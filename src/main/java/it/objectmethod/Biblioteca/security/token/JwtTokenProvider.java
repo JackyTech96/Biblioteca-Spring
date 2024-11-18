@@ -80,14 +80,14 @@ public class JwtTokenProvider {
     }
 
     public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
+        return extractClaim(token, claims -> claims.getExpiration());
     }
 
     public boolean adminFromClaims(String token) {
         return extractClaim(token, claims -> claims.get("admin", Boolean.class));
     }
 
-    public <T> T extractClaim(final String token, Function<Claims, T> claimsResolver) {
+    public <R> R extractClaim(final String token, Function<Claims, R> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }

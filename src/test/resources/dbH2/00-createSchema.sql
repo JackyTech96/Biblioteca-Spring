@@ -4,7 +4,7 @@ CREATE TABLE persona (
     email VARCHAR(255) NOT NULL,
     telefono VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    admin BOOLEAN NOT NULL
+    is_admin BOOLEAN NOT NULL
 );
 
 CREATE TABLE utente (
@@ -37,7 +37,7 @@ CREATE TABLE personale(
     isbn VARCHAR(255) NOT NULL,
     genere VARCHAR(255) NOT NULL,
     editore VARCHAR(255) NOT NULL,
-    anno_pubblicazione DATE NOT NULL,
+    anno_pubblicazione INTEGER NOT NULL,
     copie INTEGER NOT NULL
     );
 
@@ -57,7 +57,8 @@ CREATE TABLE personale(
     libro_id BIGINT NOT NULL,
     data_prestito DATE NOT NULL,
     data_scadenza_restituzione DATE NOT NULL,
-    stato_movimento VARCHAR(255) NOT NULL,
+    data_restituzione DATE,
+    stato VARCHAR(255) NOT NULL,
 
     FOREIGN KEY (utente_id) REFERENCES utente (utente_id),
     FOREIGN KEY (libro_id) REFERENCES libro (libro_id));

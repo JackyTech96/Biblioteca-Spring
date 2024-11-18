@@ -2,7 +2,7 @@ package it.objectmethod.Biblioteca.mapper;
 
 import it.objectmethod.Biblioteca.dto.IndirizzoDto;
 import it.objectmethod.Biblioteca.entity.Indirizzo;
-import org.mapstruct.Builder;
+import lombok.Builder;
 import org.mapstruct.Mapper;
 
 import java.util.List;

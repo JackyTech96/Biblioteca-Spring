@@ -2,13 +2,14 @@ package it.objectmethod.Biblioteca.mapper;
 
 import it.objectmethod.Biblioteca.dto.UtenteDto;
 import it.objectmethod.Biblioteca.entity.Utente;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public interface UtenteMapper {
 
     @Mapping(target = "personaId", source = "persona.personaId")

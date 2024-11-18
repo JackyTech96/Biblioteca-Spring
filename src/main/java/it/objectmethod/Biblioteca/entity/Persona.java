@@ -32,8 +32,8 @@ public class Persona {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "admin", columnDefinition = "boolean default false")
-    private Boolean isAdmin;
+    @Column(name = "isAdmin")
+    private boolean isAdmin = false;
 
     @Column(name = "telefono")
     @Nullable

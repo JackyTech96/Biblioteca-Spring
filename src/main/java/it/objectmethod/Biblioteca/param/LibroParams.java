@@ -28,7 +28,7 @@ public class LibroParams {
     private Year annoPubblicazione;
 
     public Specification<Libro> toSpecification() {
-        return Specification.<Libro>where(null)
+        return Specification.<Libro>where(null) // where 0 = 0 and libro_id = ?
                 .and(equalIdSpecification(libroId))
                 .and(equalTitoloSpecification(titolo))
                 .and(equalAutoreSpecification(autore))

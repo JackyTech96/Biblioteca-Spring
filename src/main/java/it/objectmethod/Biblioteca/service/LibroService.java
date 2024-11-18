@@ -29,6 +29,12 @@ public class LibroService {
         return libroMapper.libriToLibroDto(libroRepository.findAll());
     }
 
+    public ApiResponse<LibroDto> getLibroById(final Long id) {
+        return new ApiResponse<>("Libro:", libroMapper
+                .libroToLibroDto(libroRepository.findById(id).orElseThrow(
+                        () -> new ElementNotFoundException("Nessun libro trovato con l'id " + id))));
+    }
+
     public ApiResponse<LibroDto> createLibro(final LibroDto libroDto) {
         Libro libro = libroMapper.libroDtoToLibro(libroDto);
         LibroDto libroDtoToSave = libroMapper.libroToLibroDto(libroRepository.save(libro));

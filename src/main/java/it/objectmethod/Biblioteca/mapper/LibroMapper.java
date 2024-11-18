@@ -3,13 +3,14 @@ package it.objectmethod.Biblioteca.mapper;
 import it.objectmethod.Biblioteca.dto.LibroDto;
 import it.objectmethod.Biblioteca.dto.LibroExportDto;
 import it.objectmethod.Biblioteca.entity.Libro;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {PrenotazioneMapper.class, MovimentoLibroMapper.class})
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true), uses = {PrenotazioneMapper.class, MovimentoLibroMapper.class})
 public interface LibroMapper {
     @Mapping(target = "movimentoLibri", source = "movimentiLibro")
     LibroDto libroToLibroDto(Libro libro);

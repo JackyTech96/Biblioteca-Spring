@@ -29,6 +29,12 @@ public class LibroService {
         return libroMapper.libriToLibroDto(libroRepository.findAll());
     }
 
+    public ApiResponse<LibroDto> getLibroById(final Long id) {
+        return new ApiResponse<>("Libro trovato con successo", libroMapper
+                .libroToLibroDto(libroRepository.findById(id).orElseThrow(
+                        () -> new ElementNotFoundException("Nessun libro trovato con l'id " + id))));
+    }
+
     public ApiResponse<LibroDto> createLibro(final LibroDto libroDto) {
         Libro libro = libroMapper.libroDtoToLibro(libroDto);
         LibroDto libroDtoToSave = libroMapper.libroToLibroDto(libroRepository.save(libro));
@@ -37,7 +43,8 @@ public class LibroService {
 
     public List<LibroDto> findWithSpecification(final LibroParams libroParams) {
         return Optional.of(libroMapper.libriToLibroDto(libroRepository.findAll(libroParams.toSpecification())))
-                .stream().filter(List::isEmpty)
+                .stream()
+                .filter(List::isEmpty)
                 .findFirst()
                 .orElseThrow(() -> new ElementNotFoundException("Nessun libro trovato con i criteri specificati"));
     }

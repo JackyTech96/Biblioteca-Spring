@@ -2,12 +2,13 @@ package it.objectmethod.Biblioteca.mapper;
 
 import it.objectmethod.Biblioteca.dto.MovimentoLibroDto;
 import it.objectmethod.Biblioteca.entity.MovimentoLibro;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {LibroMapper.class, UtenteMapper.class})
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true), uses = {LibroMapper.class, UtenteMapper.class})
 public interface MovimentoLibroMapper {
 
     @Mapping(target = "libroId", source = "libro.libroId")

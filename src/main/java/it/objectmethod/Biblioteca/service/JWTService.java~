@@ -49,7 +49,7 @@ public class JwtService {
         String token = JWT.create()
                 .withSubject(persona.getEmail())
                 .withClaim("id", persona.getPersonaId())
-                .withClaim("admin", persona.isAdmin())
+                .withClaim("admin", persona.getIsAdmin())
                 .withExpiresAt(scadenza)
                 .sign(algorithm);
         return token;
