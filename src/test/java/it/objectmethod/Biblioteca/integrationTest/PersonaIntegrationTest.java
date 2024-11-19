@@ -1,4 +1,4 @@
-package it.objectmethod.Biblioteca.IntegrationTest;
+package it.objectmethod.Biblioteca.integrationTest;
 
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
@@ -22,14 +22,14 @@ public class PersonaIntegrationTest extends BaseIntegrationtest {
 
     @Test
     void shouldReturnPersona_whenSearchById() {
-        List<PersonaDto> expected = fetchAllPersona();
-        ApiResponse<PersonaDto> primaPersona = new ApiResponse<>("Persona: ", expected.get(0));
+        final List<PersonaDto> expected = fetchAllPersona();
+        final ApiResponse<PersonaDto> secondaPersona = new ApiResponse<>("Persona:", expected.get(1));
 
 
         // ACT --> AZIONE
         ApiResponse<PersonaDto> actual = given()
                 .port(this.port)
-                .pathParam("id", 1L)
+                .pathParam("id", 2L)
                 .contentType(ContentType.JSON)
                 .when()
                 .get("/api/persona/{id}")
@@ -45,7 +45,7 @@ public class PersonaIntegrationTest extends BaseIntegrationtest {
         // ASSERT -> ASSERZIONE
         assertThat(actual)
                 .usingRecursiveComparison()
-                .isEqualTo(primaPersona);
+                .isEqualTo(secondaPersona);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class PersonaIntegrationTest extends BaseIntegrationtest {
 
         // ARRANGE -> ARRANGIAMENTO
         ApiResponse<PersonaDto> expected = ApiResponse.<PersonaDto>builder()
-                .message("Persona:")
+                .message("Persona creata con successo:")
                 .data(PersonaDto.builder()
                         .personaId(6L)
                         .nome("giuseppe")
@@ -86,7 +86,7 @@ public class PersonaIntegrationTest extends BaseIntegrationtest {
                 .isEqualTo(expected);
     }
 
-    static List<PersonaDto> fetchAllPersona() {
+    private static List<PersonaDto> fetchAllPersona() {
         return List.of(PersonaDto.builder()
                         .personaId(1L)
                         .nome("gigi")

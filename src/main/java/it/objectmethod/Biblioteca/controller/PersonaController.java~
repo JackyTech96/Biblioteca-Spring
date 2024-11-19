@@ -23,7 +23,7 @@ public class PersonaController {
     public ResponseEntity<ApiResponse<List<PersonaDto>>> getAllPersona() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ApiResponse<>("Lista persone", personaService.findAll()));
+                .body(personaService.findAll());
     }
 
     @GetMapping("{id}")
@@ -37,7 +37,6 @@ public class PersonaController {
     @PostMapping("")
     public ResponseEntity<ApiResponse<PersonaDto>> createPersona(@Valid @RequestBody final PersonaDto personaDto) {
         ApiResponse<PersonaDto> response = personaService.createPersona(personaDto);
-        response.setMessage("Persona creata correttamente");
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);

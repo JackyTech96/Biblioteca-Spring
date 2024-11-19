@@ -50,6 +50,8 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
         "classpath:/dbH2/06-insertIntoLibro.sql",
         "classpath:/dbH2/07-insertIntoPrenotazione.sql",
         "classpath:/dbH2/08-insertIntoMovimentoLibro.sql",
+        "classpath:/dbH2/09-insertIntoIndirizzo.sql",
+        "classpath:/dbH2/10-insertIntoPersonaIndirizzo.sql"
 
 }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public abstract class BaseIntegrationtest {

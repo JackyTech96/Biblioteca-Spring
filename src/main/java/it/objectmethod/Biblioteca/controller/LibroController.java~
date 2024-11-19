@@ -24,8 +24,9 @@ public class LibroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<LibroDto>>  findById(@PathVariable final Long id) {
-        return libroService.getLibroById(id);
+    public ResponseEntity<ApiResponse<LibroDto>> findById(@PathVariable final Long id) {
+        ApiResponse<LibroDto> response = libroService.getLibroById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("")

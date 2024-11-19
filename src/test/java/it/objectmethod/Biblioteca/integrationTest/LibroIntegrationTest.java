@@ -1,4 +1,4 @@
-package it.objectmethod.Biblioteca.IntegrationTest;
+package it.objectmethod.Biblioteca.integrationTest;
 
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
@@ -64,6 +64,7 @@ public class LibroIntegrationTest extends BaseIntegrationtest {
                         .genere("Fantasy")
                         .editore("Mondadori")
                         .annoPubblicazione(Year.of(1954))
+                        .copie(5)
                         .prenotazioni(List.of(
                                 PrenotazioneDto.builder()
                                         .libroId(1L)

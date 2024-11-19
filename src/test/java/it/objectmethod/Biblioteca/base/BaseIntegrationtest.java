@@ -53,7 +53,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
         "classpath:/dbH2/09-insertIntoIndirizzo.sql",
         "classpath:/dbH2/10-insertIntoPersonaIndirizzo.sql"
 
-}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS) // Before test method prima
 public abstract class BaseIntegrationtest {
 
     @LocalServerPort

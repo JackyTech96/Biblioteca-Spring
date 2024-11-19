@@ -25,8 +25,9 @@ public class LibroService {
     @Autowired
     ExcelExportService excelExportService;
 
-    public List<LibroDto> getAllLibri() {
-        return libroMapper.libriToLibroDto(libroRepository.findAll());
+    public ApiResponse<List<LibroDto>> getAllLibri() {
+        return new ApiResponse<>("Libri:",
+                libroMapper.libriToLibroDto(libroRepository.findAll()));
     }
 
     public ApiResponse<LibroDto> getLibroById(final Long id) {
@@ -42,12 +43,18 @@ public class LibroService {
     }
 
     public List<LibroDto> findWithSpecification(final LibroParams libroParams) {
-        return Optional.of(libroMapper.libriToLibroDto(libroRepository.findAll(libroParams.toSpecification())))
-                .stream()
-                .filter(List::isEmpty)
-                .findFirst()
-                .orElseThrow(() -> new ElementNotFoundException("Nessun libro trovato con i criteri specificati"));
+//        return Optional.of(libroMapper.libriToLibroDto(libroRepository.findAll(libroParams.toSpecification())))
+//                .stream()
+//                .filter(List::isEmpty)
+//                .findFirst()
+//                .orElseThrow(() -> new ElementNotFoundException("Nessun libro trovato con i criteri specificati"));
+        List<Libro> libri = libroRepository.findAll(libroParams.toSpecification());
+        if (libri.isEmpty()) {
+            throw new ElementNotFoundException("Nessun libro trovato con i criteri specificati.");
+        }
+        return libroMapper.libriToLibroDto(libri);
     }
+
 
     public LibroDto updateLibro(final LibroDto libroDto, final Long id) {
         Libro libro = libroRepository.findById(id).orElseThrow(

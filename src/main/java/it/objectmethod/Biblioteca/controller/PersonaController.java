@@ -23,15 +23,14 @@ public class PersonaController {
     public ResponseEntity<ApiResponse<List<PersonaDto>>> getAllPersona() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ApiResponse<>("Lista persone", personaService.findAll()));
+                .body(personaService.findAll());
     }
 
     @GetMapping("{id}")
     public ResponseEntity<ApiResponse<PersonaDto>> getPersona(@Valid @PathVariable final Long id) {
-        PersonaDto response = personaService.getPersonaById(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ApiResponse<>("Persona: ", response));
+                .body(personaService.getPersonaById(id));
     }
 
     @PostMapping("")

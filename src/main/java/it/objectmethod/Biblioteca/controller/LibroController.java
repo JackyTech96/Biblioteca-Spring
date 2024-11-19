@@ -19,8 +19,10 @@ public class LibroController {
     private LibroService libroService;
 
     @GetMapping("")
-    public List<LibroDto> findAll() {
-        return libroService.getAllLibri();
+    public ResponseEntity<ApiResponse<List<LibroDto>>> findAll() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(libroService.getAllLibri());
     }
 
     @GetMapping("/{id}")

@@ -28,8 +28,9 @@ public class PersonaService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public List<PersonaDto> findAll() {
-        return personaMapper.personaListToPersonaDtoList(personaRepository.findAll());
+    public ApiResponse<List<PersonaDto>> findAll() {
+        return new ApiResponse<>("Lista persone", personaMapper
+                .personaListToPersonaDtoList(personaRepository.findAll()));
     }
 
     public ApiResponse<PersonaDto> createPersona(final PersonaDto personaDto) {
@@ -37,17 +38,18 @@ public class PersonaService {
         Persona persona = personaMapper.personaDtoToPersona(personaDto);
         persona.setPassword(passwordEncoder.encode(persona.getPassword()));
         PersonaDto personaDtoToSave = personaMapper.personaToPersonaDto(personaRepository.save(persona));
-        return new ApiResponse<>("Persona:", personaDtoToSave);
+        return new ApiResponse<>("Persona creata con successo:", personaDtoToSave);
     }
 
 
-    public PersonaDto getPersonaById(final Long id) {
-        return personaMapper.personaToPersonaDto(
-                personaRepository.findById(id)
-                        .orElseThrow(() -> new ElementNotFoundException(String.format("Persona con id %d non trovata", id)))
-        );
+    public ApiResponse<PersonaDto> getPersonaById(final Long id) {
+        return new ApiResponse<>("Persona:",
+                personaMapper.personaToPersonaDto(
+                        personaRepository.findById(id)
+                                .orElseThrow(() -> new ElementNotFoundException(
+                                        String.format("Persona con id %d non trovata", id)))
+                ));
     }
-
 
     /**
      * Cancella le persone che non hanno il nome in maiuscolo e crea un backup in Excel
