@@ -38,7 +38,7 @@ public class PersonaService {
         Persona persona = personaMapper.personaDtoToPersona(personaDto);
         persona.setPassword(passwordEncoder.encode(persona.getPassword()));
         PersonaDto personaDtoToSave = personaMapper.personaToPersonaDto(personaRepository.save(persona));
-        return new ApiResponse<>("Persona:", personaDtoToSave);
+        return new ApiResponse<>("Persona creata con successo:", personaDtoToSave);
     }
 
 
@@ -49,6 +49,14 @@ public class PersonaService {
                                 .orElseThrow(() -> new ElementNotFoundException(
                                         String.format("Persona con id %d non trovata", id)))
                 ));
+    }
+
+    public ApiResponse<PersonaDto> updatePersona(final PersonaDto personaDto, final Long id) {
+        Persona persona = personaRepository.findById(id).orElseThrow(
+                () -> new ElementNotFoundException("Nessuna persona trovata con l'id " + id));
+        personaMapper.updatePersona(persona, personaDto);
+        PersonaDto personaUpdated = personaMapper.personaToPersonaDto(personaRepository.save(persona));
+        return new ApiResponse<>("Persona aggiornata con successo", personaMapper.personaToPersonaDto(personaRepository.save(persona)));
     }
 
     /**

@@ -33,7 +33,7 @@ public class LibroServiceTest {
     private LibroMapper libroMapper;
 
     @Mock
-    private LibroParams libroParams;
+    private LibroParams libroParams; // mock, se non valorizzo è tutto null, e si ha solo l'istanza
 
     @InjectMocks
     private LibroService libroService;
@@ -129,6 +129,7 @@ public class LibroServiceTest {
 
     @Test
     void shouldReturnLibro_whenSearchBySpecification() {
+        // Preparo i dati per il test
         final List<Libro> libroList = List.of(Libro.builder()
                         .libroId(1L)
                         .titolo("titolo 1")
@@ -150,24 +151,17 @@ public class LibroServiceTest {
                         .copie(2)
                         .build());
 
-
-        libroParams.setTitolo("titolo 1");
-
-     /*   when(libroRepository.findAll(libroParams.toSpecification())).thenReturn(libroList.stream() // Errore qui.
-                .filter(libro -> libro.getTitolo().equals(libroParams.getTitolo()))
-                .toList());*/
-
-/*        doReturn(libroList.stream()
-                .filter(libro -> libro.getTitolo().equals(libroParams.getTitolo()))
-                .toList());
-        when(libroRepository.findAll(libroParams.toSpecification()));*/
-
+        // Configuro i mock per restituire i dati preparati
+        when(libroParams.getTitolo())
+                .thenReturn("titolo 1"); // chiamo il mock e gli dico che il titolo è questo!!!!
+        // Filtro la lista dei libri in base al titolo
         List<Libro> filteredList = libroList.stream()
                 .filter(libro -> libro.getTitolo().equals(libroParams.getTitolo()))
                 .toList();
-
-        when(libroRepository.findAll(libroParams.toSpecification())).thenReturn(filteredList);
-
+        // Configuro il mock per restituire la lista filtrata
+        when(libroRepository.findAll(libroParams.toSpecification()))
+                .thenReturn(filteredList);
+        // Configuro il mock per convertire la lista filtrata in lista di LibroDto
         final List<LibroDto> libroDtoList = List.of(
                 LibroDto.builder()
                         .libroId(1L)
@@ -180,10 +174,12 @@ public class LibroServiceTest {
                         .copie(1)
                         .build()
         );
-        when(libroMapper.libriToLibroDto(libroList)).thenReturn(libroDtoList);
+        when(libroMapper.libriToLibroDto(filteredList)).thenReturn(libroDtoList);
 
+        // Eseguo il metodo da testare
         final List<LibroDto> actual = libroService.findWithSpecification(libroParams);
 
+        // Verifico che il risultato attuale corrisponda all'aspettativa
         assertThat(actual)
                 .usingRecursiveComparison()
                 .isEqualTo(libroDtoList);

@@ -51,6 +51,14 @@ public class PersonaService {
                 ));
     }
 
+    public ApiResponse<PersonaDto> updatePersona(final PersonaDto personaDto, final Long id) {
+        Persona persona = personaRepository.findById(id).orElseThrow(
+                () -> new ElementNotFoundException("Nessuna persona trovata con l'id " + id));
+        personaMapper.updatePersona(persona, personaDto);
+        PersonaDto personaUpdated = personaMapper.personaToPersonaDto(personaRepository.save(persona));
+        return new ApiResponse<>("Persona aggiornata con successo", personaUpdated);
+    }
+
     /**
      * Cancella le persone che non hanno il nome in maiuscolo e crea un backup in Excel
      * prima della sanificazione.

@@ -3,6 +3,7 @@ package it.objectmethod.Biblioteca.integrationTest;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
 import it.objectmethod.Biblioteca.base.BaseIntegrationtest;
+import it.objectmethod.Biblioteca.dto.LibroDto;
 import it.objectmethod.Biblioteca.dto.PersonaDto;
 import it.objectmethod.Biblioteca.response.ApiResponse;
 import org.junit.jupiter.api.Test;
@@ -84,6 +85,46 @@ public class PersonaIntegrationTest extends BaseIntegrationtest {
                 .usingRecursiveComparison()
                 .ignoringFields("data.password")
                 .isEqualTo(expected);
+    }
+
+    @Test
+    void shouldUpdatePersona() {
+        List<PersonaDto> allPersona = fetchAllPersona();
+        PersonaDto personaToUpdate = allPersona.get(0);
+        personaToUpdate.setNome("carlo");
+
+        ApiResponse<PersonaDto> expected = ApiResponse.<PersonaDto>builder()
+                .message("Persona aggiornata con successo")
+                .data(PersonaDto.builder()
+                        .personaId(1L)
+                        .nome("carlo")
+                        .email("gi@fra")
+                        .telefono("324888974")
+                        .password("12345")
+                        .isAdmin(true)
+                        .build())
+                .build();
+
+        ApiResponse<PersonaDto> actual = given()
+                .port(this.port)
+                .contentType(ContentType.JSON)
+                .body(personaToUpdate)
+                .pathParam("id", 1L)
+                .when()
+                .put("/api/persona/{id}")
+                .then()
+                .statusCode(200)
+                .extract()
+                .response()
+                .body()
+                .as(new TypeRef<>() {
+                });
+
+        assertThat(actual)
+                .usingRecursiveComparison()
+                .ignoringFields("data.password")
+                .isEqualTo(expected);
+
     }
 
     private static List<PersonaDto> fetchAllPersona() {

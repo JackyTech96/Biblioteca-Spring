@@ -40,4 +40,12 @@ public class PersonaController {
                 .status(HttpStatus.CREATED)
                 .body(response);
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<ApiResponse<PersonaDto>> updatePersona(@Valid @PathVariable final Long id, @Valid @RequestBody final PersonaDto personaDto) {
+        ApiResponse<PersonaDto> response = personaService.updatePersona(personaDto, id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+    }
 }

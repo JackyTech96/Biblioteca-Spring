@@ -205,15 +205,13 @@
             <artifactId>hibernate-jpamodelgen</artifactId>
             <version>6.1.7.Final</version>
         </dependency>
-
-        <!-- Email -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
     </dependencies>
 
-
+    <!-- Email -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
 
     <build>
         <plugins>

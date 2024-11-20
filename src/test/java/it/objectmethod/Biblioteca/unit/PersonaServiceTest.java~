@@ -165,7 +165,7 @@ public class PersonaServiceTest {
                 .build();
 
         final ApiResponse<PersonaDto> expected = new ApiResponse<>();
-        expected.setMessage("Persona aggiornata con successo");
+        expected.setMessage("Persona aggiornata con successo:");
         expected.setData(personaDtoUpdated);
 
         // Configura i mock per restituire i dati preparati

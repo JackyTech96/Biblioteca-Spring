@@ -24,7 +24,7 @@ public class DatabaseIntegrationTest extends BaseIntegrationtest {
     @Test
     public void testH2DatabaseConnection() {
         // Verifica che la connessione al database H2 funzioni correttamente
-        Integer result = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PERSONA_INDIRIZZO'", Integer.class);
+        Integer result = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PRENOTAZIONE'", Integer.class);
         assertThat(result).isEqualTo(1); // Verifica che la tabella esista
     }
 }
