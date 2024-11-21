@@ -17,6 +17,8 @@ import java.util.Date;
 @Builder
 public class UtenteDto {
 
+    private Long utenteId;
+
     @NotNull(message = "La data di inizio iscrizione non può essere nulla")
     @Past(message = "La data di inizio iscrizione deve essere nel passato")
     private Date inizioIscrizione;
@@ -30,6 +32,7 @@ public class UtenteDto {
     private String email;
     private String telefono;
     private String password;
+    private boolean isAdmin = false;
 //    private List<PrenotazioneDto> prenotazioni;
 //    private List<MovimentoLibroDto> movimentiLibro;
 }

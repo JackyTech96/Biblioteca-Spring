@@ -6,7 +6,6 @@ import it.objectmethod.Biblioteca.base.BaseIntegrationtest;
 import it.objectmethod.Biblioteca.dto.LibroDto;
 import it.objectmethod.Biblioteca.dto.MovimentoLibroDto;
 import it.objectmethod.Biblioteca.dto.PrenotazioneDto;
-import it.objectmethod.Biblioteca.entity.Libro;
 import it.objectmethod.Biblioteca.enums.StatoMovimento;
 import it.objectmethod.Biblioteca.enums.StatoPrenotazione;
 import it.objectmethod.Biblioteca.param.LibroParams;
@@ -22,6 +21,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LibroIntegrationTest extends BaseIntegrationtest {
 
+    @Test
+    void shouldReturnAllLibro() {
+        List<LibroDto> allLibro = fetchAllLibro();
+        ApiResponse<List<LibroDto>> expected = new ApiResponse<>("Libri:", allLibro);
+
+        ApiResponse<List<LibroDto>> actual = given()
+                .port(this.port)
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/libro")
+                .then()
+                .statusCode(200)
+                .extract()
+                .response()
+                .prettyPeek()
+                .body()
+                .as(new TypeRef<>() {
+                });
+
+        assertThat(actual)
+                .usingRecursiveComparison()
+                .isEqualTo(expected);
+    }
 
     @Test
     void shouldReturnLibro_whenSearchById() {
@@ -243,11 +265,11 @@ public class LibroIntegrationTest extends BaseIntegrationtest {
                         .libroId(2L)
                         .titolo("Harry Potter e la Pietra Filosofale")
                         .autore("J.K. Rowling")
-                        .isbn("9788804652787")
+                        .isbn("9780747532743")
                         .genere("Fantasy")
-                        .editore("Mondadori")
+                        .editore("Bloomsbury")
                         .annoPubblicazione(Year.of(1997))
-                        .copie(5)
+                        .copie(7)
                         .prenotazioni(List.of(
                                 PrenotazioneDto.builder()
                                         .libroId(2L)

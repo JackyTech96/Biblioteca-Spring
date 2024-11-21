@@ -1,0 +1,3 @@
+INSERT INTO "UTENTE"(persona_id, data_inizio, data_fine) VALUES
+( 1, '2022-01-01', '2022-02-01'),
+( 2, '2022-01-01', '2022-02-01');
